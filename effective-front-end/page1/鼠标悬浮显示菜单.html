@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>鼠标悬浮显示菜单</title>
+</head>
+<style type="text/css">
+	.nav {
+		
+	}
+	.menu {
+		
+	}
+	ul,li {
+		list-style: none;
+	}
+	a {
+		text-decoration: none;
+	}
+	.menu .menu-li {
+		position: relative;
+		float: left;
+		width: 100px;
+		height: 50px;
+		background: #ccc;
+	}
+
+	/* 关键，当菜单项hover的时候，显示子菜单 */
+	.menu .menu-li:hover .menu-son {
+		display: list-item;
+	}
+
+	.menu a {
+		display: block;
+		width: 100%;
+		height: 100%;
+		line-height: 50px;
+		text-align: center;
+		font-size: 18px;
+		color: #aaa;
+	}
+
+	.menu .menu-son {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translate(-50%, 0);
+	}
+	.menu .menu-son a {
+		display: block;
+		width: 120px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		font-size: 16px;
+		border-bottom: 1px solid #999;
+		background: #ccc;
+		color: #aaa;
+	}
+</style>
+<body>
+<!-- 子菜单包在菜单项里面（较方便） -->
+	<div class="nav">
+		<ul class="menu">
+			<li class="menu-li">
+				<a href="#">首页</a>
+				<ul class="menu-son">
+					<li><a href="">aaa</a></li>
+					<li><a href="">bbb</a></li>
+					<li><a href="">ccc</a></li>
+				</ul>
+			</li>
+			<li class="menu-li">
+				<a href="#">订单</a>
+				<ul class="menu-son">
+					<li><a href="">高规格</a></li>
+					<li><a href="">戴菲菲</a></li>
+					<li><a href="">爱疯五</a></li>
+				</ul>
+			</li>
+			<li class="menu-li">
+				<a href="#">购物车</a>
+				<ul class="menu-son">
+					<li><a href="">王二刚</a></li>
+					<li><a href="">二个他</a></li>
+					<li><a href="">也挺好</a></li>
+				</ul>
+			</li>
+			<li class="menu-li">
+				<a href="#">关于</a>
+				<ul class="menu-son">
+					<li><a href="">炎热额</a></li>
+					<li><a href="">瑞受托</a></li>
+					<li><a href="">哈韦斯</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

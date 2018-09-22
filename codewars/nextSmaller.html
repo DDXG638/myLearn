@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>nextSmaller</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/5659c6d896bc135c4c00021e/train/javascript">nextSmaller</a>
+
+	<script type="text/javascript">
+	/*
+		Test.describe("Fixed tests", function() {
+			Test.it("Smaller numbers", function() {
+		    Test.assertEquals(nextSmaller(21), 12)
+		 		Test.assertEquals(nextSmaller(907), 790)
+				Test.assertEquals(nextSmaller(531), 513)
+				Test.assertEquals(nextSmaller(135), -1)
+				Test.assertEquals(nextSmaller(2071), 2017)
+				Test.assertEquals(nextSmaller(1027), -1)
+				Test.assertEquals(nextSmaller(414), 144)
+			})
+		  
+			Test.it("Bigger numbers", function() {
+				Test.assertEquals(nextSmaller(123456798), 123456789)
+				Test.assertEquals(nextSmaller(123456789), -1)
+				Test.assertEquals(nextSmaller(1234567908), 1234567890)
+			})
+		})5324  4325
+	*/
+		/*function nextSmaller(n) {
+			var str = (n + "").split(""),
+				temp = 0,
+				resarr = [],
+				i = 0,
+				j = 0;
+			for(i = str.length-1; i > 0; i--){
+				for(j = i - 1; j >= 0; j--){
+					var num_i = +str[i];
+					var num_j = +str[j];
+					if((num_i === 9 && num_j === 0) || (num_i < num_j)){
+						temp = str[i];
+						str[i] = str[j];
+						str[j] = temp;
+
+						var res = +str.join("");
+						var len = str.length - (res + "").split("").length;
+						if(len != 0){
+							res = res * Math.pow(10, len);
+							resarr.push(res);
+						}else{
+							resarr.push(res);
+						}
+						//resarr.push(+str.join(""));
+
+						
+
+						temp = str[i];
+						str[i] = str[j];
+						str[j] = temp;
+						resarr.push(nextSmaller(+str.join("")));
+					}
+				}
+			}
+			
+			if(resarr.length === 0){
+				return -1;
+			}
+			
+
+			resarr.sort(function(a, b){
+				return b - a;
+			});
+			//console.log(resarr);
+			for(var z of resarr){
+				if(z < n)
+					return z;
+			}
+			return -1;
+			// if(Math.min(res, n) === n){
+			// 	return -1;
+			// }
+			// return Math.max(res, first);
+		}*/
+		
+		function nextSmaller (n) {
+			var arr = (n + "").split("");
+			// 1.从左往右找到一个相邻的a和b，且a>b
+			for(var i = arr.length - 1; i > 0; i--) {
+				if(+arr[i] < +arr[i - 1]){
+					break;
+				}
+			}
+
+			// 若i=0，则说明没有找到1中要求的两个数字，则不存在符合题意的数字
+			if(i === 0) {
+				return -1;
+			}
+
+			// 2.在数组arr中以i为分界点，找到arr[i]右边的数字（小于arr[i-1]）中最大的一个
+			// 记录最大数字的下标
+			var max = i;
+
+			for(var j = i + 1; j < arr.length; j++) {
+				if(+arr[j] > +arr[i] && +arr[j] < +arr[i - 1]) {
+					max = j;
+				}
+			}
+
+			// 3.arr[i-1]与arr[max]位置交换
+			var temp = arr[i - 1];
+			arr[i - 1] = arr[max];
+			arr[max] = temp;
+
+			// 4.arr中，下标为i之后的数字按从大到小排序
+			var front = arr.slice(0, i);
+			var back = arr.slice(i, arr.length);
+
+			back.sort(function(a, b) {
+				return b - a;
+			});
+
+			var result = +front.concat(back).join('');
+			if(arr.length > (result + "").length){
+				return -1;
+			}else{
+				return result;
+			}
+		}
+
+		console.log(nextSmaller(21));
+		console.log(nextSmaller(907));
+		console.log(nextSmaller(531));
+		console.log(nextSmaller(135));
+		console.log(nextSmaller(2071));
+		console.log(nextSmaller(1027));
+		console.log(nextSmaller(414));
+		console.log(nextSmaller(123456798));
+		console.log(nextSmaller(123456789));
+		console.log(nextSmaller(1234567908));
+		console.log(nextSmaller(301));
+	</script>
+</body>
+</html>

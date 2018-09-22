@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>跨域请求</title>
+</head>
+<body>
+<h1>3000端口</h1>
+<button class="getInfo">点击跨域获取数据（无处理）</button>
+<hr>
+<textarea class="tt">123</textarea>
+
+<script src='js/jquery-3.2.1.min.js'></script>
+<script type="text/javascript">
+	$(".getInfo").on("click", function () {
+		$.ajax({
+            url: 'http://localhost:4000/getInfo',
+            type: 'GET',
+            dataType: 'json',
+            xhrFields: {
+				withCredentials: true
+			},
+            success: function (res) {
+                $('.tt').text(JSON.stringify(res));
+            }
+        });
+	});
+</script>
+</body>
+</html>

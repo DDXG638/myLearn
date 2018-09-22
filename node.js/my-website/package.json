@@ -1,0 +1,7 @@
+{
+  "name": "my-website",
+  "version": "0.01",
+  "dependencies": {
+    "connect": "^3.6.5"
+  }
+}

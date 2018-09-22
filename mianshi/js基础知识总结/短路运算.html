@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>短路运算</title>
+</head>
+<body>
+	
+	<script>
+		console.log("0 || 1 = "+(0 || 1));
+		console.log("1 || 2 = "+(1 || 2));
+		console.log("0 && 1 = "+(0 && 1));
+		console.log("1 && 2 = "+(1 && 2));
+		console.log(false == '0')
+		console.log(false === '0')
+
+		var a={},
+			b={key:'b'},
+			c={key:'c'};
+		a[b]=123;
+		a[c]=456;
+ 		
+		console.log(a[b]);
+		console.log(a[c]);
+		console.log(a);
+		console.log(b);
+		console.log(c);
+		for(let aa in a){
+			console.log(aa);
+		}
+		/*
+			对象的键只能是string类型，当传入对象做键时，对象会调用toString()方法，而对象toString()的结构都是[object Object],即：
+			a['[object Object]']=123;
+			a['[object Object]']=456;
+		*/
+	</script>
+</body>
+</html>

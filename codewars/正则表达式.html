@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>正则表达式</title>
+</head>
+<body>
+<h3>正则表达式</h3>
+
+<script type="text/javascript">
+	var reg = /\d+/g;
+ 	console.log(reg.exec('1234dhi343sf2').toString());    //['1234']
+
+ 	var str = 'this is reg expression test'
+
+ 	console.log(str.match(/\bi.\s\w+/)); //['is reg']
+</script>
+</body>
+</html>

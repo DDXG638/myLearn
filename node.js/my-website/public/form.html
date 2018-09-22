@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>form表单</title>
+</head>
+<body>
+	<p>form表单submit事件</p>
+	<p>利用表单的特性，输入完表单数据按下回车键就发送请求。不使用表单的话需要监听keypress事件，较为麻烦。</p>
+	<form class="myForm" id="myForm">
+		<label>用户名：</label>
+		<input type="text" name="username">
+		<label>密码：</label>
+		<input type="password" name="password">
+		<label>搜索：</label>
+		<input type="search" name="search">
+		<label>性别</label>
+		<input type="radio" name="sex" value="0">
+		<input type="radio" name="sex" value="1">
+		<label>爱好</label>
+		<input type="checkbox" name="hobit" value="1">
+		<input type="checkbox" name="hobit" value="2">
+		<input type="checkbox" name="hobit" value="3">
+		<input type="checkbox" name="hobit" value="4">
+		<p>输入地址信息：</p>
+		<textarea name="address"cols="30" rows="10"></textarea>
+		<button type="submit">提交</button>
+	</form>
+
+	<hr>
+
+	<p>form表单有两个方法，平时比较少用，</p>
+	<p>一个是serialize()，生成表单所有数据的url形式</p>
+	<p>$('.myForm').serialize()</p>
+
+	<p>一个是serializeArray()，生成表单所有数据的对象数组形式</p>
+	<p>$('.myForm').serializeArray()</p>
+
+	<p>使用ajax结合form表单处理数据就会方便很多。<br>
+	但是有个问题是，像checkbox这样name都相同的的就会显示多个键值对。<br>
+	这里这里在jquery里面曾加一个方法，是的当有多个name相同的时候转为一个数组<br>
+	$.fn.serializeForm()</p>
+
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+		$.fn.serializeForm = function() {
+			console.log('ll');
+			var o = {};
+			var formDate = this.serializeArray();
+			$.each(formDate, function(index, item) {
+				// 若存在同名
+				if (o[item.name] !== undefined) {
+					// 若o[item.name]不为数组，则转为数组
+					if (!o[item.name].push) {
+						o[item.name] = [o[item.name]];
+					}
+					// 往数组中添加参数
+					o[item.name].push(item.value) || '';
+				}
+				// 不存在同名
+				else {
+					o[item.name] = item.value || '';
+				}
+			});
+			return o;
+		};
+	</script>
+	<script type="text/javascript">
+	/* 获取表单的data数据，然后使用ajax发送数据，需要监听表单的submit事件 */
+		$(".myForm").on("submit", function() {
+			// alert("submit");
+			console.log($(".myForm").serialize());
+			getData();
+			return false; // return false代表不发送表单请求
+		});
+		function getData(data) {
+			$.ajax({
+			url: 'http://localhost:4000/getInfo3',
+			type: 'POST',
+			dataType: 'json',
+			data: $(".myForm").serialize(),// 序列化出来的是表单的数据，形式：username=123&password=123&search=132
+			xhrFields: {
+				withCredentials: true
+			}, 
+			success: function (res, textStatus, xhr) {
+				console.log(xhr.getResponseHeader("Content-Length"));
+				$('.tt').text(JSON.stringify(res));
+			}
+		});
+		}
+	</script>
+</body>
+</html>

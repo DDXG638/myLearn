@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>自定义radio或checkbox</title>
+</head>
+<style type="text/css">
+	#nn {
+		display: none;
+	}
+	/* 关键，伪类:checked; */
+	/* checkbox选中状态 */
+	input[type=checkbox]:checked + .checkbox {
+		border: 1px solid red;
+	}
+	/* checkbox未选中状态 */
+	.checkbox {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background: #eee;
+		border-radius: 50%;
+		border: 1px solid #aaa;
+	}
+
+	
+
+</style>
+<body>
+	<div class="form-box">
+		<p>自定义checkbox</p>
+		<!-- 一定要使用label元素包住，复选框按钮设置了display：none，鼠标是点击不到的，
+			 实际的点击是通过点击label元素的，
+			 这是label的特性：没有for属性的情况下，点击label默认触发label元素里面的input元素
+		-->
+		<label>
+			<!-- 真正的checkbox -->
+			<input type="checkbox" name="" id="nn" value="111" checked>
+			<!-- 模拟的checkbox -->
+			<span class="checkbox"></span>
+		</label>
+		<label>
+			<input type="radio" name="sex">
+			<input type="radio" name="sex">
+		</label>
+		<label>
+			<input type="checkbox" class="cc" name="nn" value="222" >
+			<input type="checkbox" class="cc" name="nn" value="333" >
+		</label>
+	</div>
+</body>
+</html>

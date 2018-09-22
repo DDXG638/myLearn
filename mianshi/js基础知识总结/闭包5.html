@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包2</title>
+</head>
+<body>
+	
+	<script>
+		function User(){
+		   this.name = "Vicfeel";  //共有属性
+		   var age = 23;    //私有属性
+		   this.sayAge = function(){
+		       console.log("my age is " + age);
+		   }
+		}
+		var user = new User();
+		console.log("name:"+user.name); //"Vicfeel"
+		console.log("age:"+user.age);  //"undefined"
+		user.sayAge();   //"my age is 23"
+	</script>
+</body>
+</html>

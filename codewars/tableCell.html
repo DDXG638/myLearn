@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>table-cell布局</title>
+	<style type="text/css">
+	.content {
+        display: table-cell;
+        padding: 10px;
+        border: 2px solid #999;
+        height: 250px;
+        vertical-align: middle;
+    }
+    
+    .content div {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .content p {
+		display: inline-block;
+        vertical-align: middle;
+    }
+
+    .content2 {
+    	margin-top: 20px;
+       
+        padding: 10px;
+        width: 600px;
+        border: 2px solid #999;
+    }
+    
+    .left-box {
+        float: left;
+        margin-right: 10px;
+    }
+    
+    .right-box {
+        display: table-cell;
+        padding: 10px;
+        width: 3000px;
+        vertical-align: top;
+        border: 1px solid #ccc;
+    }
+
+    .content3 {
+    	margin-top: 20px;
+        display: table;
+        padding: 10px;
+        border: 2px solid #999;
+    }
+    
+    .box1 {
+        display: table-cell;
+        width: 100px;
+        border: 1px solid red;
+    }
+    
+    .box2 {
+        display: table-cell;
+        border: 1px solid red;
+    }
+	</style>
+</head>
+<body>
+<div class="content">
+    <div style="height: 100px;width: 80px;background: #cccccc;"></div>
+    <div style="height: 120px;width: 80px;background: #639146;"></div>
+    <div style="height: 140px;width: 80px;background: #2B82EE;"></div>
+    <div style="height: 160px;width: 80px;background: #F57900;"></div>
+    <div style="height: 180px;width: 80px;background: #BC1D49;"></div>
+    <p style="width: 100px">顶顶顶顶顶</p>
+    <p style="width: 100px">顶顶顶顶顶顶顶顶顶</p>
+</div>
+
+
+<div class="content2">
+    <div class="left-box">
+        <img src="./img/shop3.jpeg" width="70">
+    </div>
+    <div class="right-box">哈水水哈水水水水深红色水水水水哈水水水水深红水水哈水水水水深红水水哈水水水水深红色水水水水哈水水水水深红色水水水水水水深红色水水水水</div>
+</div>
+
+<div class="content3">
+    <div class="box1">左右一样高</div>
+    <div class="box2">顶顶顶顶顶顶顶顶凤飞飞凤飞飞飞嘎嘎嘎嘎嘎嘎个顶顶顶顶顶顶顶顶凤飞飞凤飞飞飞嘎嘎嘎嘎嘎嘎个哈哈哈哈哈哈哈哈哈哈哈</div>
+</div>
+</body>
+</html>

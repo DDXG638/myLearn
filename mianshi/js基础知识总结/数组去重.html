@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组去重的实现</title>
+</head>
+<body>
+	
+	<script>
+		var arr = [5,4,6,8,3,15,21,32,15,3,'5',6,5,6];
+		function quchong(arr){
+			var result = [];
+			for(var i=0;i<arr.length;i++){
+				var flag = false;//没有相等的
+				for(var j=0;j<result.length;j++){
+					if(arr[i]===result[j]){
+						flag=true;
+						break;
+					}
+				}
+				if(flag==false){
+					result.push(arr[i]);
+				}
+			}
+			return result;
+		}
+		function quchong2(arr){//使用hash表去重,用数据作为键
+			var result = [];
+			var hash = {};
+			for(var i=0;i<arr.length;i++){
+				if(!hash[arr[i]]){//判断arr[i]这个键有没有对应一个值
+					hash[arr[i]]=true;
+					result.push(arr[i]);
+				}
+			}
+			return result;
+		}
+		function quchong3(arr){//改进hash表去重方法，对象对属性索引时会进行强制类型转换，arr[‘1’]和arr[1]得到的都是arr[1]的值
+			var result = [];
+			var hash = {};
+			for(var i=0;i<arr.length;i++){
+				var t = typeof arr[i];//获取数据的类型
+				hash[arr[i]] || (hash[arr[i]] = new Array());//如果存在键为arr[i]的哈希表（值为数组）就往下；如果不存在，就创建健为arr[i]值为数组的哈希键值对
+				if(hash[arr[i]].indexOf(t)<0){//哈希值（数组中存的是键的数据类型）的类型不重复
+					result.push(arr[i]);
+					hash[arr[i]].push(t);
+				}
+			}
+			return result;
+		}
+		function quchong4(arr){
+			arr.sort(function(a,b){
+				return a-b;
+			});
+			//console.log(arr);
+			var result = [arr[0]];
+			for(var i=0;i<arr.length;i++){
+				arr[i] != result[result.length-1] && result.push(arr[i]);
+			}
+			return result;
+		}
+
+		var bb = quchong4(arr);
+		console.log(bb);
+	</script>
+</body>
+</html>

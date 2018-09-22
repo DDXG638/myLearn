@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>zepto动画</title>
+	<style type="text/css">
+		li {
+			list-style: none;
+			border:1px solid red;
+			padding:5px 10px;
+		}
+
+		.container {
+			height: 0;
+			position: relative;
+			overflow: hidden;
+			background: blue;
+			-webkit-transition: height 1s linear;
+			
+		}
+		.container .cc {
+			position: absolute;
+			bottom: 0;
+		}
+		/* .helped2 {
+			animation:mymove 2s linear;
+			-webkit-animation:mymove 2s linear; Safari and Chrome
+		}
+		@keyframes mymove
+		{
+			from {display: none;}
+			to {display:block;}
+		} */
+	</style>
+</head>
+<body>
+	<ul>
+		<li id="help">123</li>
+		<div class="container">
+			<ul class="cc">
+				<li>111</li>
+				<li>222</li>
+				<li>333</li>
+			</ul>
+		</div>
+
+		<li class="help">456</li>
+		<div class="container">
+			<ul class="cc">
+				<li>111</li>
+				<li>222</li>
+				<li>333</li>
+			</ul>
+		</div>
+
+		<li class="help">789</li>
+		<div class="container">
+			<ul class="cc">
+				<li>111</li>
+				<li>222</li>
+				<li>333</li>
+			</ul>
+		</div>
+	</ul>
+
+	<!-- <p>想看美女图片？<a href="javascript:" id="button" data-rel="more">点击我</a></p>
+	<div id="more" class="container">
+	    <div class="wrap">
+	        <img src="http://image.zhangxinxu.com/image/study/s/s256/mm1.jpg" height="191" />
+	        <p>我就是张含韵！</p>
+	    </div>
+	</div> -->
+
+	<script src="js/zepto.min.js"></script>
+	<script type="text/javascript">
+		
+
+	//display表示默认更多展开元素是显示状态还是隐藏
+		var slideToggleTrans = function(element, display) { 
+		        // 现代浏览器
+		        element.addEventListener("click", function() {
+		            display = !display;
+		            //var rel = this.getAttribute("data-rel"), eleMore = document.querySelector("." + rel);    
+		            var eleMore = element.nextElementSibling;
+		            eleMore && (eleMore.style.height = display? (function() {
+		                var height = 0;
+		                Array.prototype.slice.call(eleMore.childNodes).forEach(function(child) {
+		                    if (child.nodeType === 1) {
+		                        var oStyle = window.getComputedStyle(child);
+		                        height = child.clientHeight + (parseInt(oStyle.borderTopWidth) || 0) + (parseInt(oStyle.borderBottomWidth) || 0);
+		                    }
+		                });    
+		                return height;
+		            })() + "px": "0px");
+
+		        });
+		};
+
+		// 应用渐进使用transition交互的slideToggle效果
+		slideToggleTrans(document.getElementById("help"), false);
+	</script>
+</body>
+</html>

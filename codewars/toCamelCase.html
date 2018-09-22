@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>toCamelCase</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/517abf86da9663f1d2000003/train/javascript">toCamelCase</a>
+
+	<script type="text/javascript">
+		function toCamelCase(str){
+			return str.split(/-|_/).map(function(val, index) {
+				return index ===0 ? val : val[0].toUpperCase() + val.substring(1);
+			}).join("");
+		}
+
+		console.log(toCamelCase("the_stealth_warrior"));
+		console.log(toCamelCase("the-stealth-warrior"));
+	</script>
+</body>
+</html>

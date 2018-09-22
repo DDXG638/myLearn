@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>css中的attr</title>
+</head>
+<style type="text/css">
+	.tip {
+		position: relative;
+	}
+	.tip:after {
+		content: attr(data-tip);
+		color: red;
+		position: absolute;
+		bottom: -100%;
+		left: 50%;
+	}
+	.bg {
+		width: 300px;
+		height:300px;
+		background-size: 100% 100%;
+	}
+</style>
+<body>
+	<p class="tip" data-tip="我是提示信息">css中可以使用attr获取节点中的属性值，这样有些东西就不用在css中写死了。</p>
+	<div class="bg" data-url="" style="background-image: url(https://cee2.iteye.com/q7/k=4dkkyy49hl,049mrq34ck&5i=fk?iglx3p=eqqdrw_jo23q_k26);"></div>
+</body>
+</html>

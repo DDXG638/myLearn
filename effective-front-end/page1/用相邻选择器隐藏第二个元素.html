@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>相邻选择器隐藏第二个元素</title>
+</head>
+<style type="text/css">
+	.wrapper {
+		width: 500px;
+		border: 2px solid blue;
+	}
+	.wrapper2 {
+		width: 500px;
+		border: 2px solid red;
+	}
+	.item {
+		width: 100%;
+		height: 100px;
+		border: 1px solid red;
+		line-height: 100px;
+	}
+	/* 隐藏第二个item */
+	.item + .item {
+		display: none;
+	}
+
+
+	.list {
+		width: 100%;
+		height: 100px;
+		border: 1px solid blue;
+		line-height: 100px;
+	}
+	/* 第一个又是倒数第二个时，隐藏 */
+	.list:first-child:nth-last-of-type(2) {
+		display: none;
+	}
+
+	/*  */
+</style>
+<body>
+	<p>有两个以上的元素时只显示第一个元素</p>
+	<div class="wrapper">
+		<div class="item">
+			1111111111
+		</div>
+		<div class="item">
+			2222222222
+		</div>
+		<div class="item">
+			33333333333
+		</div>
+		<div class="item">
+			44444444444
+		</div>
+	</div>
+	<br>
+	<p>有两个元素时，只显示后一个</p>
+	<div class="wrapper2">
+		<div class="list">
+			1111111111
+		</div>
+		<div class="list">
+			2222222222
+		</div>
+	</div>
+</body>
+</html>

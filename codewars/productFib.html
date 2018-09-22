@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/5541f58a944b85ce6d00006a/train/javascript">productFib</a>
+
+	<script>
+	/*
+		https://www.codewars.com/kata/5541f58a944b85ce6d00006a/train/javascript
+
+		Test.assertSimilar(productFib(4895), [55, 89, true])
+		Test.assertSimilar(productFib(5895), [89, 144, false])
+		Test.assertSimilar(productFib(74049690), [6765, 10946, true])
+		Test.assertSimilar(productFib(84049690), [10946, 17711, false])
+		Test.assertSimilar(productFib(193864606), [10946, 17711, true])
+		Test.assertSimilar(productFib(447577), [610, 987, false])
+		Test.assertSimilar(productFib(602070), [610, 987, true])
+	*/
+		function fib(n){
+			if(n < 2){
+				return n;
+			}
+
+			return fib(n - 2) + fib(n - 1);
+		}
+
+		function productFib(prod){
+			var sum = 0;
+			var ind = 1;
+
+			while(sum < prod){
+				sum = fib(ind) * fib(ind + 1);
+				ind++;
+			}
+
+			return sum === prod ? [fib(ind - 1), fib(ind), true] : [fib(ind - 1), fib(ind), false];
+		}
+
+		console.log(productFib(4895));
+		console.log(productFib(5895));
+		console.log(productFib(74049690));
+		console.log(productFib(84049690));
+		console.log(productFib(193864606));
+		console.log(productFib(447577));
+		console.log(productFib(602070));
+
+	</script>
+</body>
+</html>

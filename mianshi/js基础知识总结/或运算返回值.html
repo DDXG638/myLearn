@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>或运算返回值</title>
+</head>
+<body>
+	
+	<script>
+		function huo(a){
+			return a>9||a<6;
+		}
+		var a = 5;
+		console.log(huo(a));
+		/*var b = prompt('系统提示','请输入你的年龄') || 0;
+		//alert('你的年龄是' + b);
+		switch(b){
+			case 22:
+				alert('你是95年出生的');
+				break;
+			case 23:
+				alert('你是94年出生的');
+				break;
+			default : 
+				alert('你是今年出生的');
+		}*/
+		//var str1 = "你叫了我第"-a+"次";
+		//console.log(str1);
+
+		//闭包 作用域
+		function m(){
+			console.log(c);
+		    c = 50;//在局部变量中找不到定义的c 沿着作用域链找到了全局变量的c
+		    console.log('哈哈哈');
+		    //var c;
+		}
+
+		var c = 150; // 函数m()还未执行到 还没被销毁 此时全局c的值c=50
+		m();
+		//var c = 20;//到这里一步 m()已经执行完了 函数已经销毁了  这里的c还是20
+		console.log(c);//20
+	</script>
+</body>
+</html>

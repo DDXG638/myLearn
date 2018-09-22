@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>是个不同的随机数</title>
+</head>
+<body>
+	
+	<script>
+		var n = 10;
+		function randon10(nm){
+			var arr = [];
+			while(arr.length<nm){
+				var sji = Math.floor(Math.random()*31)+2;
+				console.log(sji);
+				if(arr.indexOf(sji)<0){
+					arr.push(sji);
+				}
+			}
+			return arr.toString();
+		}
+		console.log(randon10(n));
+	</script>
+</body>
+</html>

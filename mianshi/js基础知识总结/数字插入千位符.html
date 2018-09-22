@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数字插入千位符</title>
+</head>
+<body>
+	
+	<script>
+		var num = 123456789;
+		//num[1]='0';
+		//console.log(num);
+		function qianwei(n){
+			var a = n+"";
+			var str = a.split("");
+			for(var i=0;i<str.length;i++){
+				//console.log(str[i]);
+				if((i+1)%3==0){
+					var a = str[str.length-1-i];
+					str[str.length-1-i] = ","+a;
+					console.log(str[str.length-1-i]);
+				}
+			}
+			return str.join("");
+		}
+		function qianwei2(n){
+			var str = n.toString();
+			var result = '';
+			var len = str.length;
+			for(var i=0;i<len;i++){
+				result = str[len-1-i]+result;
+				if((i+1)%3==0 && i!=0){
+					result = ','+result;
+				}
+			}
+			return result;
+		}
+		function qianwei3(n){
+			var str = n.toString();
+			var result = '';
+			while(str.length>3){//每次切三个
+				result = ','+str.substr(-3)+result;
+				str = str.substr(0,str.length-3);
+			}
+			if(str && str.length>0){
+				result = str+result;
+			}
+			return result;
+		}
+		console.log(qianwei3(num));
+	</script>
+</body>
+</html>

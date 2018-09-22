@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js的ajax请求</title>
+</head>
+<body>
+	
+	<script>
+		function ajaxGet(url,fn){
+			var obj = new XMLHttpRequest();// XMLHttpRequest对象用于在后台与服务器交换数据
+			obj.open('GET',url,true);
+			obj.onreadystatechange = function(){
+				// readyState == 4说明请求已完成
+				if(obj.readyState == 4 && obj.status == 200 || obj.status == 304){
+					fn.call(this, obj.responseText);  //从服务器获得数据
+				}
+			};
+			obj.send();
+		}
+		function ajaxPost(url,data,fn){
+			var obj = new XMLHttpRequest();// XMLHttpRequest对象用于在后台与服务器交换数据
+			obj.open('POST',url,true);
+			obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");  // 添加http头，发送信息至服务器时内容编码类型
+			obj.onreadystatechange = function() {
+	            if (obj.readyState == 4 && (obj.status == 200 || obj.status == 304)) {  // 304未修改
+	                fn.call(this, obj.responseText);
+	            }
+	        };
+	        obj.send(data);
+		}
+	</script>
+</body>
+</html>

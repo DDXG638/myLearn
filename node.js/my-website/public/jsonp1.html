@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>跨域请求</title>
+</head>
+<body>
+<h1>3000端口</h1>
+<button class="getInfo">点击跨域获取数据（script引入）</button>
+<hr>
+<textarea class="tt">123</textarea>
+
+<script src='js/jquery-3.2.1.min.js'></script>
+
+<script type="text/javascript">
+
+/**
+ * 去抖函数
+ * 一段时间内（wait）只执行最后一次操作
+ */
+
+var _now = require('./now');
+
+function debouce(fn, wait) {
+    wait = wait || 0;
+    var timer;
+    var last;
+    var context;
+    var args;
+    
+    function later () {
+        var now = _now();
+
+        if (now - last >= wait) {
+            timer = null;
+            fn.apply(context, args);
+        }
+        else {
+            timer = setTimeout(later, last + wait - now);
+        }
+    }
+    return function () {
+        context = this;
+        args = arguments;
+        last = _now();
+
+        if (!timer) {
+            timer = setTimeout(later, wait);
+        }
+    };
+};
+
+	function getInfo (res) {
+		console.log(res);
+		$('.tt').text(res.name + res.age);
+	}
+
+	$(".getInfo").on("scroll", debouce(function (event) {
+		//向头部输入一个脚本，该脚本发起一个跨域请求
+		// $("head").append("<script src='http://localhost:4000/getInfo2?callback=getInfo'><\/script>");
+		
+	}, 300));
+
+	function abc() {
+
+	}
+</script>
+<!-- <script src='http://localhost:4000/getInfo2?callback=getInfo'></script> -->
+</body>
+</html>

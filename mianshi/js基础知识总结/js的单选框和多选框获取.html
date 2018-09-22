@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js单选框和多选框获取</title>
+</head>
+<body>
+	<form name="myform">
+		<div class="sexbox">
+			<label>性别：</label>
+			<input type="radio" name="sex" value="男">男
+			<input type="radio" name="sex" value="女">女
+		</div>
+		<div class="hobebox">
+			<label>爱好：</label>
+			<input type="checkbox" name="hobet">篮球
+			<input type="checkbox" name="hobet">足球
+			<input type="checkbox" name="hobet">羽毛球
+			<input type="checkbox" name="hobet">台球
+		</div>
+		
+	</form>
+	<button id="xuan">选择</button>
+	<button id="quan">全选</button>
+	<div class="text">
+		
+	</div>
+	
+	<script>
+		document.getElementById('xuan').onclick = function(){
+			//alert('123');
+			var text = document.querySelector('.text');
+			//alert(text);
+			var form = document.myform;
+			//alert(form);
+			var sex = form.sex.value;
+			var hobits = form.hobet;
+			alert(hobits);
+			var bobitstr = [];
+			hobits.forEach(function(val){
+				if(val.checked==true){
+					bobitstr.push(val.nextSibling.nodeValue);
+				}
+			});
+			text.innerHTML = '性别：'+sex+'<br>爱好：'+bobitstr.join(',');
+		};
+		document.getElementById('quan').onclick = function(){
+			document.querySelectorAll('input[name=hobet]').forEach(function(val){
+				val.setAttribute('checked',true);
+			});
+		};
+	</script>
+</body>
+</html>

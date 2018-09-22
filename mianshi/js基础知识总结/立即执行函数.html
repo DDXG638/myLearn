@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>立即执行函数</title>
+</head>
+<body>
+	
+	<script>
+		/*for(var i=0;i<5;i++){
+			setTimeout(function(){
+				console.log(i);
+			},1000);
+		}*/
+
+		
+		for(var i=0;i<5;i++){
+			(function(i){
+				setTimeout(function(){
+					console.log(i);
+				},1000);
+			})(i);
+			
+		}
+		
+		
+	</script>
+</body>
+</html>

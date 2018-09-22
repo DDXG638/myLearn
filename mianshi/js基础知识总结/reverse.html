@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h3>reverse() 会改变数组本身，并返回原数组的引用</h3>
+
+	<script>
+		var arr1 = "john".split('');//j o h n
+		console.log(arr1);
+		var arr2 = arr1.reverse();//n h o j
+		console.log(arr1==arr2);
+		console.log(arr1);
+		console.log(arr2);
+		var arr3 = "jones".split('');//j o n e s
+		console.log(arr3);
+		arr2.push(arr3);
+		console.log(arr2);
+		console.log(arr1);
+		console.log("array 1: length=" + arr1.length + " last=" + arr1.slice(-1));
+		console.log("array 2: length=" + arr2.length + " last=" + arr2.slice(-1));
+		/*
+			arr1.reverse()后arr1发生变化，返回指向arr1数组的引用给arr2，则arr1和arr2指向同一个数组，当arr2添加arr3数组时，arr1同样发生了改变，所以arr1与arr2是一样的
+		*/
+	</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>快速排序</title>
+</head>
+<body>
+	
+	<script>
+		function qsort(arr,left,right){
+			if(arr.length>1){
+				var index = partition(arr,left,right);
+				console.log(index);
+				if(left<index-1){
+					qsort(arr,left,index-1);
+				}
+				if(right>index){
+					qsort(arr,index+1,right);
+				}
+			}
+
+			//return arr;
+		}
+
+		function partition(arr,low,right){
+			var fen = Math.floor((low+right)/2);
+			var x = arr[fen];
+			var left = low;
+			while(right>left){
+				while(right>left&&arr[right]>x){
+					right--;
+				}
+				while(right>left&&arr[left]<x){
+					left++;
+				}
+				if(left<right){
+					swape(arr,left,right);
+					right--;
+					left++;
+				}
+			}
+			return left;
+		}
+
+		function swape(arr,left,right){
+			var temp = arr[left];
+			arr[left] = arr[right];
+			arr[right] = temp;
+		}
+
+		/*function split(array, low, high) {
+		    var i = low;
+		    var x = array[low];
+		    for(var j = low + 1; j <= high; j++) {
+		        if(array[j] <= x) {
+		            i ++;
+		            if(i != j) {
+		                var temp = array[i];
+		                array[i] = array[j];
+		                array[j] = temp;
+		            }
+		        }
+		    }
+		 
+		    temp = array[low];
+		    array[low] = array[i];
+		    array[i] = temp;
+		    return i;
+		}
+		function quicksort(array, low, high) {
+		    if(low < high) {
+		        var w = split(array, low, high);
+		        quicksort(array, low, w -1);
+		        quicksort(array, w +1, high);
+		        return array;
+		    }
+		}
+		var array = [5,6,4,9,3,7,2,1];
+		array = quicksort(array, 0, array.length-1);
+		console.log(array);*/
+
+
+
+		var a = [5,6,4,9,3,7,2,1];
+		qsort(a,0,a.length-1);
+		//quickSort(a);
+		console.log(a);
+	</script>
+</body>
+</html>

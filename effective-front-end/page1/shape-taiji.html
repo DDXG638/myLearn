@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>太极-阴阳图</title>
+</head>
+<style>
+    .tai-ji {
+        position: relative;
+        width: 100px;
+        height: 50px;
+        background: #eee;
+        border-color: red;
+        border-style: solid;
+        border-radius: 50%;
+        border-width: 2px 2px 52px 2px;
+    }
+
+    .tai-ji:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border: 19px solid red;
+        border-radius: 50%;
+        background: #eee;
+        top: 50%;
+        left: 0;
+    }
+
+    .tai-ji:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border: 19px solid #eee;
+        border-radius: 50%;
+        background:red;
+        top: 50%;
+        right: 0;
+    }
+</style>
+<body>
+    <div class="tai-ji"></div>
+</body>
+</html>

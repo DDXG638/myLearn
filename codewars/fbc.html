@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>很乖的布局现象</title>
+	<style type="text/css">
+		ul {
+			list-style: none;
+		}
+		li {
+			display: block;
+			vertical-align: baseline;
+		}
+
+		.row {
+			padding: 10px;
+			width: 300px;
+			margin: 0 auto;
+			border: 1px solid black;
+		}
+		.row .box {
+			height: 60px;
+			line-height: 60px;
+			border: 1px solid red;
+		}
+		.row .ico {
+			display: inline-block;
+			width:5px;
+			height: 5px;
+			background: blue;
+		}
+		.row .title {
+			display: inline-block;
+			vertical-align: top;
+		}
+		.row .more {
+			display: inline-block;
+			width:10px;
+			height: 10px;
+			background: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="row">
+		<ul>
+			<li class="box">
+				<i class="ico"></i>
+				<span class="title">什么是玫瑰？</span>
+				<i class="more"></i>
+			</li>
+			<li class="box">
+				<i class="ico"></i>
+				<span class="title">什么是玫瑰？</span>
+				<i class="more"></i>
+			</li>
+			<li class="box">
+				<i class="ico"></i>
+				<span class="title">什么是玫瑰？</span>
+				<i class="more"></i>
+			</li>
+		</ul>
+		
+	</div>
+</body>
+</html>

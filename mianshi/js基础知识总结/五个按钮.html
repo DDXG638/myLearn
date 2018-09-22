@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>五个按钮</title>
+</head>
+<body>
+	<h3>循环遍历5个按钮，看输出什么</h3>
+
+	<script>
+		for (var i = 0; i < 5; i++) {
+			(function(i){
+				var btn = document.createElement('button');
+				btn.appendChild(document.createTextNode('Button ' + i));
+				btn.addEventListener('click', function(){ console.log(i); });
+				document.body.appendChild(btn);
+			})(i);
+		}
+	</script>
+</body>
+</html>

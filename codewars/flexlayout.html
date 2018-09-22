@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>flex布局</title>
+</head>
+
+<style type="text/css">
+	.container {
+		width: 750px;
+		margin: 0 auto;
+		border: 1px solid red;
+	}
+	li {
+		list-style: none;
+	}
+	p {
+		margin:0;
+	}
+
+	.container .lists {
+		display: flex;
+		align-items: flex-start;
+		padding:10px 5px;
+		border-bottom:1px solid #999;
+	}
+	.container .lists:last-child {
+		border-bottom: none;
+	}
+	.container .lists .image{
+		height:50px;
+		width:70px;
+		vertical-align: middle;
+		display: flex;
+		align-items: center;
+	}
+	.lists .image .dot{
+		display: inline-block;
+		height: 6px;
+		width: 6px;
+		border-radius: 50%;
+		background: red;
+		vertical-align: middle;
+	}
+	.container .lists .detail {
+		width:500px;
+	}
+	.container .lists .btn-box {
+		align-self: center;
+	}
+
+</style>
+<body>
+	
+	<div class="container">
+		<ul>
+			<li class="lists">
+				<div class="image">
+					<em class="dot"></em>
+					<img src="img/shop3.jpeg" width="50" height="50">
+				</div>
+				<div class="detail">
+					<p>哈哈哈哈哈哈哈哈哈</p>
+					<p>啦啦啦啦啦啦啦啦啦啦啦啦顶啦啦啦啦顶顶顶顶顶顶顶啦啦啦啦顶顶顶顶顶顶顶啦啦顶顶顶顶顶啦啦啦啦顶顶顶顶顶顶顶啦啦顶顶顶顶顶啦啦啦啦顶顶顶顶顶顶顶啦啦顶顶顶顶顶啦啦啦啦顶顶顶顶顶顶顶啦啦建军节建军节建军节建军节</p>
+				</div>
+				<div class="btn-box">
+					<button>回复</button>
+					<button>详情</button>
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>节点操作</title>
+</head>
+<body>
+	<ul id="myList">
+		<li>项目一</li>
+		<li>项目二</li>
+		<li>项目三</li>
+	</ul>
+	<button id="btn-add">添加</button>
+
+	
+</body>
+	<script type="text/javascript">
+		function add(){
+			var ul = document.getElementById("myList");
+			var lis = ul.getElementsByTagName("li");
+			var li = document.createElement("li");
+			li.innerHTML = '项目四';
+			alert(lis[1].tagName);
+			alert(ul.firstChild);
+			//ul.insertBefore(li,ul.lastChild);
+			ul.insertBefore(li,lis[1]);
+		}
+		//document.getElementById("btn-add").onclick = add;
+		document.getElementById("btn-add").addEventListener('click',add,false);
+	</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/546f922b54af40e1e90001da/train/javascript">字符转字符码</a>
+
+	<script>
+		/*
+			Test.assertEquals(alphabetPosition("The sunset sets at twelve o' clock."), "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11");
+			Test.assertEquals(alphabetPosition("The narwhal bacons at midnight."), "20 8 5 14 1 18 23 8 1 12 2 1 3 15 14 19 1 20 13 9 4 14 9 7 8 20");
+			不区分大小写，a->1,b->2...,进传入的字符串转化为数字
+		*/
+
+		function alphabetPosition(text) {//a->97,z->122,A->65
+			var str = text.toLowerCase();
+			result = [];
+			var num;
+
+			for(var i = 0;i <str.length; i++){
+				num = str.charCodeAt(i);
+				if(num >= 97 && num <=122){
+					result.push(num - 96);
+				}
+			}
+
+			return result.join(" ");
+		}
+
+		console.log(alphabetPosition("The sunset sets at twelve o' clock."));
+		
+	</script>
+</body>
+</html>

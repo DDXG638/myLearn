@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/520b9d2ad5c005041100000f/train/javascript">Simple Pig Latin</a>
+
+	<script>
+		/*
+			Test.assertEquals(pigIt('Pig latin is cool'),'igPay atinlay siay oolcay')
+			Test.assertEquals(pigIt('This is my string'),'hisTay siay ymay tringsay')
+		*/
+		function pigIt(str){
+			//Code here
+			return str.split(" ").map(function (value,index) {
+				return value.substring(1) + value.substring(0,1) + "ay";
+			}).join(" ");
+		}
+
+		console.log(pigIt("Pig latin is cool"));
+		console.log(pigIt("This is my string"));
+		
+	</script>
+</body>
+</html>

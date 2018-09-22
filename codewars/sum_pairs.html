@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>sum_pairs</title>
+</head>
+<body>
+
+	<a href="https://www.codewars.com/kata/sum-of-pairs/train/javascript">sum_pairs</a>
+
+	<script type="text/javascript">
+		/*
+		Test.describe("Testing For Sum of Pairs", 
+		Test.expect(sum_pairs(l1, 8)+"" == [1, 7]+"", 
+		Test.expect(sum_pairs(l2, -6)+"" == [0, -6]+"",
+		Test.expect(sum_pairs(l3, -7) == undefined,-7");
+		Test.expect(sum_pairs(l4, 2)+"" == [1, 1]+"",
+		Test.expect(sum_pairs(l5, 10)+"" == [3, 7]+"",
+		Test.expect(sum_pairs(l6, 8)+"" == [4, 4]+"", 
+		Test.expect(sum_pairs(l7, 0)+"" == [0, 0]+"",
+		Test.expect(sum_pairs(l8, 10)+"" == [13, -3]+
+		});
+		*/
+		var sum_pairs = function(ints, s){
+		    // 定义一个存储符合要求的数组res,用于记录符合要求组合的第二个数的下标
+		    var i,
+		    	j;
+
+		    /*// 遍历ints数组,找到符合条件的数组
+		    for(i = 0; i < min - 1; i++){
+		    	for(j = i + 1; j < min; j++){
+		    		if((ints[i] + ints[j] === s) && j < min){
+	    				min = j;
+	    				res = [ints[i],ints[j]];
+	    				break;
+		    		}
+		    	}
+		    }*/
+
+		    for(i = 1; i < ints.length; i++){
+		    	for(j = 0; j < i; j++) {
+		    		if(ints[i] + ints[j] === s){
+	    				return [ints[j], ints[i]];
+		    		}
+		    	}
+		    }
+
+		    return undefined;
+		}
+
+		console.log(sum_pairs([1, 4, 8, 7, 3, 15], 8));
+		console.log(sum_pairs([1, -2, 3, 0, -6, 1], -6));
+		console.log(sum_pairs([20, -13, 40], -7));
+		console.log(sum_pairs([1, 2, 3, 4, 1, 0], 2));
+		console.log(sum_pairs([10, 5, 2, 3, 7, 5], 10));
+		console.log(sum_pairs([4, -2, 3, 3, 4], 8));
+		console.log(sum_pairs([0, 2, 0], 0));
+		console.log(sum_pairs([5, 9, 13, -3], 10));
+	</script>
+	
+</body>
+</html>

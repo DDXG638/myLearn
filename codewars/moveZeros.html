@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Moving Zeros To The End</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/52597aa56021e91c93000cb0/train/javascript">Sum Strings as Numbers</a>
+
+	<script type="text/javascript">
+		function moveZeros (arr) { 
+			var len;
+			var result = arr.filter(function(val, index, arr) {
+				return val !== 0;
+			});
+
+			len = arr.length - result.length;
+			
+			for(var i = 0; i < len; i++){
+				result.push(0);
+			}
+
+			return result;
+		}
+
+		console.log(moveZeros([1,2,0,1,0,1,0,3,0,1]));
+
+	</script>
+</body>
+</html>

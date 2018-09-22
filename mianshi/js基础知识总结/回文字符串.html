@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>回文字符串</title>
+</head>
+<body>
+	<h1>写一个少于 80 字符的函数，判断一个字符串是不是回文字符串</h1>
+
+	<script>
+		function huiwen(str){
+			var str = str.replace(/\W/g,'').toLowerCase();//去掉非字符
+			return str==str.split('').reverse().join('');//string转为array，然后数组反转，再转为string
+		}
+
+		var ss = 'abccbca';
+		console.log(huiwen(ss));
+	</script>
+</body>
+</html>

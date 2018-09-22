@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>巧用css3伪类</title>
+</head>
+<style type="text/css">
+	input:invalid {
+		outline: 1px solid red;
+	}
+	input:focus {
+		outline: none;
+	}  
+	input {
+		outline: none;
+	}
+
+</style>
+<body>
+	<p>平时比较少用valid和invalid这里两个文伪类</p>
+	<p>:valid有效，即当填写的内容符合要求的时候触发</p>
+	<p>:invalid无效，即当填写的内容不符合要求的时候触发。</p>
+	<p>input中可以使用type和pttern等属性约束合法性</p>
+
+	<form>
+		<input type="email" name="email">
+		<!-- 三个字母 -->
+		<input type="text" name="text" pattern="[A-z]{1}">
+		<input type="text" name="text" required>
+	</form>
+</body>
+</html>

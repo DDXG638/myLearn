@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>位运算</title>
+</head>
+<body>
+	
+	<script>
+		function isJi(num){//判断奇数
+			if(num & 1){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		function MyFloor(num){//向下取整
+			return num | 0;
+		}
+
+		function MyPower(n){//2的n次方
+			return 1 << n;
+		}
+
+		function MyPower2(n,m){//n除以2的m次方
+			return n >> m;
+		}
+		//console.log(isJi(4));
+		//console.log(MyFloor(2.0));
+		//console.log(MyPower(5));
+		console.log(MyPower2(64,5));
+	</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script>
+		function divisors(integer) {
+		  var res = [];
+		  var mid = Math.floor(integer / 2);
+		  for(var i = 2; i <= mid; i++){
+		    integer % i == 0 && res.push(i);
+		  }
+		  return res.length>0 ? '[' + res.join(', ').toString() + ']' : integer + ' is prime';
+		};
+		console.log(divisors(15));
+		console.log(divisors(12));
+		console.log(divisors(13));
+	</script>
+</body>
+</html>

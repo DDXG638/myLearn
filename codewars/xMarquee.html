@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无限滚动</title>
+<style>
+body{ font-size:12px;}
+.xMarquee{ width:280px;overflow:hidden;height:32px;}
+img,a{border:0px;}
+.l{ float:left; padding:20px;}.
+</style>
+<script>
+	function xMarquee(obj,fx,temp,speed){
+		obj = document.getElementById(obj);
+		var xh = obj.innerHTML;
+		var sid = 'xScroll_'+Math.floor(Math.random()*10000);
+		var neh = '';
+		var fc ;
+		if(fx==""||fx=="right"||fx==null){
+			// 在原div的基础上又加了一层div，主要用于控制元素的方向
+		 	neh = '<div style="display:block;float:left;">'+xh+'</div>';
+		 	// 有嵌套多一层div，重复两次一样的内容，预设很长的宽度，设置一个内部id，最终的DOM结构就是这样子了
+			obj.innerHTML = '<div id="'+sid+'" style=" width:9900%;">'+neh+neh+'<div style="clear:both;"></div></div>';
+			// fc 为obj的子元素，即2个neh（需要滚动的内容）
+			fc = document.getElementById(sid).childNodes;
+			// 若第一个neh的宽度小于obj容器的宽度，（滚动的内容太少）就没有必要做滚动了
+			if(fc[0].offsetWidth<=obj.offsetWidth){obj.innerHTML = xh;return;}
+			// 最终设置id为sid的div的宽为其两个子元素的宽度
+			document.getElementById(sid).style.width = fc[0].offsetWidth*2+'px';
+		}else if(fx=="up"||fx=="down"){
+			// 上下滚动的话主要设置高度
+			neh = '<div style="display:block;">'+xh+'</div>';
+			obj.innerHTML = '<div id="'+sid+'">'+neh+neh+'<div style="clear:both;"></div></div>';
+			fc = document.getElementById(sid).childNodes;
+			if(fc[0].offsetHeight<=obj.offsetHeight){obj.innerHTML = xh;return;}
+			document.getElementById(sid).style.height = fc[0].offsetHeight*2+'px';
+		}
+		// t就是起始的滚动位置，temp是初始的偏移量
+		var t = 0;
+		// 默认滚动方向为左
+		if(fx==''||typeof fx == undefined||fx==null){fx = "left";}
+		// 默认的偏移数为1px
+		if(temp==''||typeof temp == undefined||temp==null){temp = 1;}
+		// 默认的速度为50ms
+		if(speed==''||typeof speed == undefined||speed==null){speed = 50;}
+		// 向右或向下平移的话，一开始滚动的内容就要显示第二个
+		if(fx=="right"){obj.scrollLeft = fc[0].offsetWidth*2;t = fc[0].offsetWidth;}
+		if(fx=="down"){obj.scrollTop = fc[0].offsetHeight*2;t = fc[0].offsetHeight;}
+		var dos = function(speed){
+			if(fx=="left"){
+				t=t+temp;
+				// 当第一部分向左滚动完后，
+				if(obj.scrollLeft>=fc[0].offsetWidth){
+					console.log(obj.scrollLeft);
+					t = temp+3;
+					obj.scrollLeft=temp+3;
+				}else{
+					obj.scrollLeft=t;
+				}
+			}
+			if(fx=="right"){
+				t=t-temp;
+				if(obj.scrollLeft<=0){
+					t = fc[0].offsetWidth+3;
+					obj.scrollLeft=fc[0].offsetWidth+3;
+				}else{
+					obj.scrollLeft=t;
+				}
+			}
+			if(fx=="up"){
+				t=t+temp;
+				if(obj.scrollTop>=fc[0].offsetHeight){
+					t = temp+3;
+					obj.scrollTop=temp+3;
+				}else{
+					obj.scrollTop=t;
+				}
+			}
+			if(fx=="down"){
+				t=t-temp;
+				if(obj.scrollTop<=0){
+					t = fc[0].offsetHeight-3;
+					obj.scrollTop=fc[0].offsetHeight-3;
+				}else{
+					obj.scrollTop=t;
+				}
+			}
+		}
+		var s = window.setInterval(function(){dos(speed)},speed);
+		// over是鼠标移动到滚动内容的方面，滚动停止
+		var over = function(e){
+			e = e || window.event;
+			if(e.stopPropagation) { //W3C阻止冒泡方法
+				e.stopPropagation();
+			} else {
+				e.cancelBubble = true; //IE阻止冒泡方法
+			}
+			obj.setAttribute('data-status','over');
+			window.clearInterval(s);
+		}
+		var out = function(){
+			var _s = obj.getAttribute('data-status');
+			if(_s == 'over'){
+				obj.setAttribute('data-status','out');
+				s = window.setInterval(function(){dos(speed)},speed);
+			}
+		}
+		try{
+			obj.addEventListener('mouseover',over,false);
+			obj.addEventListener('click',over,false);
+			obj.addEventListener('mouseout',out,false);
+			document.addEventListener('click',out,false);
+		}catch(e){
+			//ie
+			obj.attachEvent('onmouseover',over);
+			obj.attachEvent('onmouseout',out);
+		}
+	}
+	window.onload = function(){
+		xMarquee('xMarquee');
+		xMarquee('xMarquee2','right');
+		xMarquee('xMarquee3','up');
+		xMarquee('xMarquee4','down');
+		xMarquee('xMarquee5');
+		xMarquee('xMarquee6','right');
+		xMarquee('xMarquee7','up');
+		xMarquee('xMarquee8','down');
+	}
+</script>
+</head>
+
+<body>
+<p style="line-height:16px;">
+window.onload = function(){<br/>
+    xMarquee('xMarquee');<br/>
+    xMarquee('xMarquee2','right');<br/>
+    xMarquee('xMarquee3','up');<br/>
+    xMarquee('xMarquee4','down');<br/>
+    xMarquee('xMarquee5');<br/>
+    xMarquee('xMarquee6','right');<br/>
+    xMarquee('xMarquee7','up');<br/>
+    xMarquee('xMarquee8','down');<br/>
+}<br/>
+
+使用说明：xMarquee(' 对象id ',' 滚动方向 ',' 偏移(正整数,越大滚动越快，默认 1) ',' 频率(正整数,越小滚动越快，默认 50) ');<br/>
+根据个人需求可以对'偏移'和'频率'进行调整，达到最佳效果。
+</p>
+<br/><br/>
+<div class="l">
+        	left:<br/>
+            <div id="xMarquee" class="xMarquee">
+                <a href="http://haiqiancun.com/">1111111111112222222222222222233333333333344444444444445555555555555555</a><img src="http://haiqiancun.com/application/js/xheditor_emot/default/proud.gif" data-tag="simg" data-bd-imgshare-binded="1">
+            </div>
+</div>
+<div class="l">
+        	right:<br/>
+            <div id="xMarquee2" class="xMarquee">
+                <a href="http://haiqiancun.com/">1111111111112222222222222222233333333333344444444444445555555555555555</a>
+            </div>
+</div>
+<div class="l">
+        	up:<br/>
+            <div id="xMarquee3" class="xMarquee">
+                <br/><a href="http://haiqiancun.com/">http://haiqiancun.com/http://haiqiancun.com/http://haiqiancun.com/</a><img src="http://haiqiancun.com/application/js/xheditor_emot/default/proud.gif" data-tag="simg" data-bd-imgshare-binded="1"><br/>
+                <br/><a href="http://haiqiancun.com/">http://haiqiancun.com/http://haiqiancun.com/http://haiqiancun.com/</a><img src="http://haiqiancun.com/application/js/xheditor_emot/default/proud.gif" data-tag="simg" data-bd-imgshare-binded="1">
+            </div>
+</div>
+<div class="l">
+        	down:<br/>
+            <div id="xMarquee4" class="xMarquee">
+                <br/><a href="http://haiqiancun.com/">http://haiqiancun.com/http://haiqiancun.com/http://haiqiancun.com/</a><img src="http://haiqiancun.com/application/js/xheditor_emot/default/proud.gif" data-tag="simg" data-bd-imgshare-binded="1"><br/>
+                <br/><a href="http://haiqiancun.com/">http://haiqiancun.com/http://haiqiancun.com/http://haiqiancun.com/</a><img src="http://haiqiancun.com/application/js/xheditor_emot/default/proud.gif" data-tag="simg" data-bd-imgshare-binded="1">
+            </div>
+</div>
+
+
+
+
+
+<div style="clear:both;"></div>
+<br/><br/><br/><br/><br/><br/><br/>
+<div class="l">
+        	left:<br/>
+            <div id="xMarquee5" class="xMarquee" style="height:150px;">
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/574e9258d109b3debf7150efcebf6c81810a4c6e.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/342ac65c103853431732c6a99113b07ecb8088bd.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4bed2e738bd4b31c6769914e85d6277f9f2ff8ea.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4a36acaf2edda3cc7ef6f9a803e93901213f9223.jpg" width="150" height="200" /></a>
+            </div>
+            
+</div>
+<div class="l">
+        	right:<br/>
+            <div id="xMarquee6" class="xMarquee" style="height:150px;">
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/574e9258d109b3debf7150efcebf6c81810a4c6e.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/342ac65c103853431732c6a99113b07ecb8088bd.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4bed2e738bd4b31c6769914e85d6277f9f2ff8ea.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4a36acaf2edda3cc7ef6f9a803e93901213f9223.jpg" width="150" height="200" /></a>
+            </div>
+</div>
+<div class="l">
+        	up:<br/>
+            <div id="xMarquee7" class="xMarquee" style="height:500px; width:150px;">
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/574e9258d109b3debf7150efcebf6c81810a4c6e.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/342ac65c103853431732c6a99113b07ecb8088bd.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4bed2e738bd4b31c6769914e85d6277f9f2ff8ea.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4a36acaf2edda3cc7ef6f9a803e93901213f9223.jpg" width="150" height="200" /></a>
+            </div>
+</div>
+<div class="l">
+        	down:<br/>
+            <div id="xMarquee8" class="xMarquee" style="height:500px; width:150px;">
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/574e9258d109b3debf7150efcebf6c81810a4c6e.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/342ac65c103853431732c6a99113b07ecb8088bd.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4bed2e738bd4b31c6769914e85d6277f9f2ff8ea.jpg" width="150" height="200" /></a>
+                <a href="http://haiqiancun.com/"><img src="http://haiqiancun.com/file//study/meinv/4a36acaf2edda3cc7ef6f9a803e93901213f9223.jpg" width="150" height="200" /></a>
+            </div>
+</div>
+
+
+
+
+</body>
+</html>

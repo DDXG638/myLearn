@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>浮点数相加</title>
+</head>
+<body>
+	
+	<script>
+		let a = 1.1;
+		let b = 3.2;
+		let len = Math.max((a+"").length,(b+"").length);
+		console.log(len);
+		console.log((a+b).toPrecision(len-1));
+		//toPrecision(n),返回String，从左到右非零数字起，保留n位数字，四舍五入
+		//toFixed(n)，返回数字，保留小数点后n位，四舍五入
+	</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>判断整数</title>
+</head>
+<body>
+	
+	<script>
+		function isZheng(num){
+			var n = parseInt(num,10);
+			return num === n;
+		}
+
+		function isZheng2(num){
+			return typeof num ==='number' && num%1 === 0;
+		}
+
+		function isZheng3(num){
+			return Math.floor(num) === num;
+		}
+
+		function isZheng4(num){
+			return (num | 0) === num;//其实就是向下取整
+		}
+
+		console.log(isZheng3(12.0));
+	</script>
+</body>
+</html>

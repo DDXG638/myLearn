@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/550f22f4d758534c1100025a/train/javascript">东南西北</a>
+
+	<script>
+	/*
+		Test.assertSimilar(dirReduc(["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"]), ["WEST"])
+		Test.assertSimilar(dirReduc(["NORTH", "WEST", "SOUTH", "EAST"]), ["NORTH", "WEST", "SOUTH", "EAST"])
+		Test.assertSimilar(dirReduc(["NORTH", "SOUTH", "EAST", "WEST", "EAST", "WEST"]), [])
+
+		我的理解中，使用dirReduc()方法，第二个测试样例返回的是[],但是与网站上的结果不一致。然后在讨论区中发现方向抵消只是在相邻的方向上进行的，然后写了dirReduc2方法
+	*/
+		function dirReduc(directions) {
+			var result = [];
+			var hash = {};
+			var oppo = {
+				"NORTH" : "SOUTH",
+				"SOUTH": "NORTH",
+				"WEST" : "EAST",
+				"EAST" : "WEST"
+			}
+
+			for(var item of directions){
+				if(!hash[item]){
+					hash[item] = 0;
+				}
+				if(hash[oppo[item]] && hash[oppo[item]]>0){
+					hash[oppo[item]]--;
+					hash[item] > 0 ? hash[item]-- : hash[item] = 0;
+				}else{
+					hash[item]++;
+				}
+			}
+
+			for(var item in hash){
+				for(var j = 0; j <hash[item]; j++){
+					result.push(item);
+				}
+			}
+
+			return result;
+		}
+
+		function dirReduc2(arr){
+			var result = [];
+			var directions = {
+				"NORTH" : "SOUTH",
+				"SOUTH": "NORTH",
+				"WEST" : "EAST",
+				"EAST" : "WEST"
+			}
+
+			for(var item of arr){
+				if(result[result.length-1] === directions[item]){
+					
+					//与前面的方向抵消
+					result.pop();
+				}else{
+					result.push(item);
+				}
+			}
+
+			return result;
+		}
+
+		console.log(dirReduc2(["NORTH", "SOUTH", "EAST", "WEST", "EAST", "WEST"]));
+
+	</script>
+</body>
+</html>

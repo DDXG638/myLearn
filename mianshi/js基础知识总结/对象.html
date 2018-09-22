@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>constuctor</title>
+</head>
+<body>
+	
+	<script>
+		function A(){};
+		function B(){};
+		var f = function(){alert('aaa');};
+		var f2 = [];
+		B.prototype = new A();//B继承A
+		var obj = new B();
+		console.log(obj.constructor === A);
+		console.log(obj.constructor === B);
+		console.log(Object.prototype.toString.call(obj));
+		console.log(Object.prototype.toString.call(f));
+		
+		console.log('哈哈:'+Object.prototype.toString.call(f2));
+		var c = '12.35';
+		console.log(Number(c));
+		console.log(typeof Number(c));
+		console.log([1,2,3].toString());
+		
+	</script>
+</body>
+</html>

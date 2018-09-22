@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>before和after的妙用</title>
+</head>
+<style type="text/css">
+	.exp1::after {
+		content: '('attr(href)')';
+	}
+	.h1::before {
+		content: attr(data-text);
+	}
+
+	.clearfix:after{
+		content:"";//设置内容为空
+		height:0;//高度为0
+		line-height:0;//行高为0
+		display:block;//将文本转为块级元素
+		visibility:hidden;//将元素隐藏
+		clear:both//清除浮动
+	}
+	.clearfix{
+		zoom:1;为了兼容IE
+	}
+.exp2::before {
+	content: open-quote;
+	color: #DDD;  
+    font-size: 40px;  
+    font-family: serif;  
+    font-weight: bolder;  
+}
+.exp2::after {
+	content: close-quote;
+	color: #DDD;  
+    font-size: 40px;  
+    font-family: serif;  
+    font-weight: bolder;  
+}
+.exp3::before {
+	content: url(img/xtb2.jpg);
+}
+
+.exp4 {
+	counter-reset: section;
+}
+h1{
+    counter-reset: subsection;
+}
+h1:before{
+    counter-increment:section;
+    content:counter(section) "、";
+}
+h2:before{
+    counter-increment:subsection;
+    content: counter(section) "." counter(subsection) "、";
+}
+
+.exp5 {
+	width: 400px;
+	height: 200px;
+	background: #1869bf; 
+	text-align: center;
+}
+.exp5 a {
+	text-decoration: none;
+	font-size: 20px;
+	color: red;
+}
+
+.exp5 a:hover::before 
+{ 
+	position: relative;
+	content: "["; left: -20px; 
+}  
+.exp5 a:hover::after 
+{ 
+	position: relative;
+	content: "]"; right:  -20px; 
+} 
+
+
+/*按钮 阴影无扩展 */
+.bt {
+    margin: 100px auto;
+    display: block;
+    width: 350px;
+    opacity:1;
+    border-bottom: 1px solid #C5C5C5;
+    border-top: 1px solid #C5C5C5;
+    box-shadow: 0 1px 0 #F6F6F6, 0 1px 0 #F6F6F6 inset;
+    transition: all 0.5s ease-in;
+}
+
+.button:before, .button2:before {
+    content: "";
+    width: 130px;
+    height: 130px;
+    display: block;
+    z-index: -1;
+    position: relative;
+    background: #ddd;
+    left: -15px;
+    top: -15px;
+    border-radius: 65px;
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.4);
+}
+.button:after, .button2:after {
+    content: "注册";
+    color: #09F;
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 100px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    display: block;
+}
+.button2:after {
+    content: "登入";
+    word-spacing: 25px;
+    color: #A0D989;
+}
+.button, .button2 {
+    float: left;
+    margin: 50px auto;
+    cursor: pointer;
+    height: 100px;
+    width: 100px;
+    display: block;
+    position: relative;
+    color: black;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 50px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    background: #FFF;
+    transition: all 0.5s ease-in;
+}
+.button {
+    float: left;
+}
+.button2 {
+    float: right;
+}
+
+.exp6 {
+	position: relative;
+	margin-right: 20px;
+	font-size: 30px;
+	color: #aaa;
+}
+.exp6::before {
+	content: attr(data-text);
+    position: absolute;
+    width: 50%;
+    color: blue;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.exp6-2 {
+	position: relative;
+	font-size: 30px;
+	color: #aaa;
+}
+.exp6-2::before {
+	content: attr(data-text);
+    position: absolute;
+    height: 50%;
+    color: blue;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.exp7 {
+	margin: 10px;
+	position: relative;
+	width: 100px;
+	height: 100px;
+	border: 2px solid red;
+}
+
+.exp7::after {
+	position: absolute;
+	content: ' ';
+	width: 0;
+	height: 0;
+	left: 100%;
+	top: 42px;
+	border: 10px solid transparent;
+	border-left-color: #fff;
+}
+.exp7::before {
+	position: absolute;
+	content: ' ';
+	width: 0;
+	height: 0;
+	left: 100%;
+	top: 40px;
+	border: 12px solid transparent;
+	border-left-color: red;
+}
+
+.exp8 {
+	margin: 10px;
+	position: relative;
+	width: 100px;
+	height: 100px;
+	border: 2px solid red;
+}
+.exp8::before {
+	position: absolute;
+	content: ' ';
+	width: 0;
+	height: 0;
+	top: 100%;
+	left: 40px;
+	border: 12px solid transparent;
+	border-top-color: red;
+}
+.exp8::after {
+	position: absolute;
+	content: ' ';
+	width: 0;
+	height: 0;
+	top: 100%;
+	left: 42px;
+	border: 10px solid transparent;
+	border-top-color: #fff;
+}
+
+</style>
+<body>
+
+<h3 class='h1' data-text='attr'>例子:</h3>
+<a class="exp1" href="https://ddxg638.github.io">东东小瓜的博客</a>
+
+<h3>open-quote与close-quote</h3>
+<p class="exp2">扭扭车坤宁宫弄呢女傲慢</p>
+
+<h3>使用url添加图标</h3>
+<p class="exp3">扭扭车坤宁宫弄呢女傲慢</p>
+
+<div class="exp4">
+	<h1>HTML tutorials</h1>
+	<h2>HTML Tutorial</h2>
+	<h2>XHTML Tutorial</h2>
+	<h2>CSS Tutorial</h2>
+
+	<h1>Scripting tutorials</h1>
+	<h2>JavaScript</h2>
+	<h2>VBScript</h2>
+
+	<h1>XML tutorials</h1>
+	<h2>XML</h2>
+	<h2>XSL</h2>
+</div>
+
+<div class="exp5">
+	<a href="#">悬浮出现方括号</a>
+</div>
+
+<div class="bt">
+  	<div class="button"></div>
+  	<div class="button2"></div>
+  	<div style="clear:both"> </div> 
+</div>
+
+<span class="exp6" data-text='小冬瓜'>小冬瓜</span>  
+<span class="exp6-2" data-text='小冬瓜'>小冬瓜</span>
+
+<div class="exp7"></div>
+<div class="exp8">
+	
+</div>
+</body>
+</html>

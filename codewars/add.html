@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<a href="https://www.codewars.com/kata/520b9d2ad5c005041100000f/train/javascript">A Chain adding function</a>
+
+	<script>
+		/*
+			Test.expect(add(1) == 1);
+			Test.expect(add(1)(2) == 3);
+			Test.expect(add(1)(2)(3) == 6);
+		*/
+		
+		function add(n) {
+			return function(){
+				return arguments[0] ? n + arguments[0] : n;
+			}
+		}
+
+		console.log(add(1)(2)(3));
+	</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>方法返回一个方法</title>
+</head>
+<body>
+	<h3>一个按照下面方式调用都能正常工作的 sum 方法</h3>
+	<h4>console.log(sum(2,3)); // Outputs 5</h4>
+	<h3>console.log(sum(2)(3)); // Outputs 5</h3>
+
+	<script>
+		function sum(){
+			var first = arguments[0];
+			if(arguments.length==2){
+				return first+arguments[1];
+			}else{
+				return function(){
+					return first + arguments[0];
+				}
+			}
+		}
+
+		console.log(sum(2)(7));
+	</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>无限滚动</title>
+</head>
+<style type="text/css">
+	ul {
+		list-style: none inside;  
+		padding: 0;
+		margin: 0;
+	}
+	.gun-img {
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		animation: myImg 6s linear infinite;
+	}
+	.gun-img:hover {
+		animation-play-state: paused;
+	}
+	@keyframes myImg {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+
+	.container{  
+        width:600px;  
+        height: 240px;
+        margin:20px auto;  
+        overflow: hidden;  
+        position: relative;  
+        border: 1px solid red;
+    }  
+    .container .imgcss{  
+        animation:scoll 6s linear 0s infinite;  
+    } 
+    .container .textcss {
+		animation:textScroll 6s linear 0s infinite;  
+    }
+	.container ul {
+        width:4000px;  
+        left:0;  
+        top:0;  
+        position: absolute;  
+	}
+    .container ul:hover {
+		animation-play-state: paused;
+	} 
+    .container ul li{  
+        float:left;  
+    }  
+	@-webkit-keyframes scoll{  
+        from{  
+            left:0;  
+        }  
+        to{  
+            left:-960px;  
+        }  
+    }   
+	@-webkit-keyframes textScroll{  
+        from{  
+            left:0;  
+        }  
+        to{  
+            left:-986px;  
+        }  
+    }   
+
+    .container2 {
+    	width:600px;  
+        height: 240px;
+        margin:20px auto;  
+        overflow: hidden;   
+        border: 1px solid red;
+    }
+    .container2 ul {
+    	display: table-cell;
+    }
+	.container2 li {
+		display: table-cell;
+	}
+
+     
+</style>
+<body>
+	<img src="./img/shop3.jpeg" class="gun-img">
+	<hr>
+	<div class="container">  
+	    <ul class="imgcss">  
+	        <li>
+	        	<img src="./img/shop4.jpg"> 
+	        </li>
+	        <li>
+	        	<img src="./img/shop5.jpg"> 
+	        </li>
+	        <li>
+	        	<img src="./img/shop7.jpg"> 
+	        </li>
+	        <li>
+	        	<img src="./img/shop4.jpg"> 
+	        </li>
+	        <li>
+	        	<img src="./img/shop5.jpg"> 
+	        </li>
+	        <li>
+	        	<img src="./img/shop7.jpg"> 
+	        </li>
+	    </ul>  
+	</div>  
+	<div class="container" style="height:50px;">  
+	    <ul class="textcss">  
+	        <li>
+	        	11111111111111111111111111111111111
+	        </li>
+	        <li>
+	        	22222222222222222222222222222222222
+	        </li>
+	        <li>
+	        	33333333333333333333333333333333333
+	        </li>
+	        <li>
+	        	11111111111111111111111111111111111
+	        </li>
+	        <li>
+	        	22222222222222222222222222222222222
+	        </li>
+	        <li>
+	        	33333333333333333333333333333333333
+	        </li>
+	    </ul>  
+	</div> 
+
+	<div id="container2" class="container2">
+		<ul id="ul1">
+			<!-- <li>11111111111111111111111111111111111</li>
+			<li>22222222222222222222222222222222222</li>
+			<li>33333333333333333333333333333333333</li> -->
+			<li>
+	        	<img src="./img/shop4.jpg"> 
+	        </li>
+	        <li>
+	        	<img src="./img/shop5.jpg"> 
+	        </li>
+	        <li>
+	        	<img src="./img/shop7.jpg"> 
+	        </li>
+		</ul>
+		<ul id="ul2">
+			
+		</ul>
+	</div>
+
+
+	<script type="text/javascript">
+		var container = document.getElementById("container2");
+		var ul1 = document.getElementById("ul1");
+		// 将内容复制到ul2中
+		var ul2 = document.getElementById("ul2");
+		ul2.innerHTML = ul1.innerHTML;
+
+		function marquee() {
+			// 当滚动到滚动内容的末端时，就回到原位重新开始滚动
+			if (container.scrollLeft >= ul1.scrollWidth) {
+				container.scrollLeft = 0;
+			} else {
+				container.scrollLeft++;
+			}
+		}
+		// 设置一个定时器
+		var s = setInterval(marquee, 50);
+		// 鼠标悬浮滚动停止
+		container.onmouseover = function() { clearInterval(s);  } 
+  		container.onmouseout = function() { s = setInterval('marquee()', 50);}
+	</script>
+
+</body>
+</html>

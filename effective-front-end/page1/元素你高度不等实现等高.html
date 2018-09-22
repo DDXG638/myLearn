@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>元素高度不等实现高度相等</title>
+</head>
+<style type="text/css">
+	.wrapper {
+		display: table;
+		border: 1px solid red;
+		border-spacing: 10px 0;
+		clear: both;
+	}
+	.item {
+		display: table-cell;
+		width: 250px;
+		border: 2px solid #000;
+		font-size: 18px;
+	}
+</style>
+<body>
+	<!-- 
+		内容不同，要实现最后每个元素的高度相等，使用表格还是比较方便的，
+		table和table-cell
+	 -->
+	<div class="wrapper">
+		<div class="item">
+			小米招股书显示，小米拟向全球发售21.8亿股（其中包括14.34亿股新B类股份和7.45亿股销售股份），发售结构为95%国际发售（20.7亿股），5%香港公开发售（1.09亿股），发行价格区间为17港元-22港元。
+		</div>
+		<div class="item">
+			小米招股书显示，小米拟向全球发售21.8亿股（其中包括14.34亿股新B类股份和7.45亿股销售股份），发售结构为95%国际发售（20.7亿股），5%香港公开发售（1.09亿股），发行价格区间为17港元-22港元。小米招股书显示，小米拟向全球发售21.8亿股（其中包括14.34亿股新B类股份和7.45亿股销售股份），发售结构为95%国际发售
+		</div>
+		<div class="item">
+			【TechWeb报道】6月29日消息，据外媒消息，小米IPO定价17港元，位于17至22港元招股区间低端。不过，全天候科技援引知情人士消息称，目前小米IPO定价会仍在进行中，最终价格尚未确定。
+		</div>
+		<div class="item">
+			ivo旗舰新机NEX已经发售，很多网友也在第一时间入手该机。不过，有网友发现在使用QQ浏览器的时候，摄像头会有“升降”动作。对于QQ​浏览器会调用摄像头这种现象，也让很多网友无比担心自己的隐私
+		</div>
+	</div>
+</body>
+</html>

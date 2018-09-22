@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script>
+		var hero = {
+			_name: 'John Doe',
+			getSecretIdentity: function (){
+			return this._name;
+			}
+		};
+		 
+		var stoleSecretIdentity = hero.getSecretIdentity;
+		 
+		console.log(stoleSecretIdentity());
+		console.log(stoleSecretIdentity.call(hero));
+		console.log(hero.getSecretIdentity());
+	</script>
+</body>
+</html>

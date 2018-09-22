@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script>
+	/*
+	(function mytest() {  
+	    for(let i = 0; i < 5; i ++)  
+	        setTimeout(function(){  
+	            console.log(i);  
+	        },100);  
+	})();
+	首先，我们必须承认，js是单线程的，即使是对于ajax异步方式或者像setTimeout这样的函数。
+	对于javascript这样的执行方式，我们可以想象在函数执行过程中有两个队列。队列Q1是指执行队列，每次只能执行一个函数；队列Q2就是等待队列，存放着将要执行的函数。每当有一个函数要执行时，就会先把这个函数放进等待队列，如果Q1为空，那么久立即执行这个函数。当然在大多数情况下，函数都是立即执行的
+	现在我们再来分析一下上面那道题，很显然，每次的for循环都触发了一个定时函数，这些定时函数有点特殊，是立即执行的（如果执行队列为空的话）。但是在每次触发时，for循环都还未结束，也就是执行队列不为空，此时新建的定是函数只能放在等待队列里无法立即执行。当最后一次for循环执行结束后，执行队列变为空，这时等待队列的函数就立即进入到了执行队列，于是就开始执行只控制台输出。因为setTimeout指定的匿名函数中i的值是一种引用值（自行谷歌脑补），所以输出结果为5 5 5 5 5。
+	*/
+		(function() {
+			console.log(1); 
+			setTimeout(function(){console.log(2)}, 1000); 
+			setTimeout(function(){console.log(3)}, 0); 
+			console.log(4);
+		})();
+		
+	</script>
+</body>
+</html>
