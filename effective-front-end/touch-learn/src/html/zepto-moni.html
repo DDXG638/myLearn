@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 50px;">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟zepto的touch</title>
+</head>
+<style>
+    .touch-box {
+        width: 100%;
+        height: 10rem;
+        border: 1px red solid;
+    }
+</style>
+<body>
+    <div class="touch-box">
+
+    </div>
+
+<script src="../js/touch.js"></script>
+<script>
+    var $touchBox = document.querySelector('.touch-box');
+
+    $touchBox.addEventListener('myTouchUp', function (evt) {
+        console.log('myTouchUp');
+    });
+
+    $touchBox.addEventListener('myTouchDown', function (evt) {
+        console.log('myTouchDown');
+    });
+
+    $touchBox.addEventListener('myTouchRight', function (evt) {
+        console.log('myTouchRight');
+    });
+
+    $touchBox.addEventListener('myTouchLeft', function (evt) {
+        console.log('myTouchLeft');
+    });
+</script>
+</body>
+</html>

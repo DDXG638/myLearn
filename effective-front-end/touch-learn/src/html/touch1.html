@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 50px;">
+<head>
+    <meta charset="UTF-8">
+    <title>touch事件</title>
+</head>
+<style>
+    .touch-box {
+        margin-top: 5rem;
+        width: 100%;
+        height: 30rem;
+        border: 1px solid red;
+    }
+</style>
+<body>
+
+    <div class="touch-box">
+
+    </div>
+
+    <script>
+        document.querySelector(".touch-box").addEventListener("touchstart", function(e) {
+            console.log('touchStart', e);
+        });
+        document.querySelector(".touch-box").addEventListener("touchmove", function(e) {
+            // console.log(e);
+            console.log('touchMove', e);
+        });
+        document.querySelector(".touch-box").addEventListener("touchend", function(e) {
+            console.log('touchEnd', e);
+        });
+        document.querySelector(".touch-box").addEventListener("touchenter", function(e) {
+            console.log('touchenter', e);
+        });
+        document.querySelector(".touch-box").addEventListener("touchleave", function(e) {
+            console.log('touchleave', e);
+        });
+    </script>
+</body>
+</html>
