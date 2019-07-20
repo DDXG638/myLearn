@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>解析XML</title>
+    <style>
+        button {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn">获取xml数据</button>
+    <button class="btn2">获取json数据</button>
+    <button class="btn3">获取简单xml数据</button>
+    <button class="btn4">获取JSON-p数据</button>
+    <button class="btn5">获取自定义数据</button>
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script>
+        function parseXML(responseXML) {
+
+            var users = [];
+            var userNodes = responseXML.getElementsByTagName('user');
+            var node, usernameNodes, usernameNode, username,
+                realnameNodes, realnameNode, realname,
+                emailNodes, emailNode, email, id;
+
+            for (var i = 0, len = userNodes.length; i < len; i++) {
+
+                node = userNodes[i];
+                username = realname = email = '';
+
+                usernameNodes = node.getElementsByTagName('username');
+                if (usernameNodes && usernameNodes[0]) {
+                    usernameNode = usernameNodes[0];
+                    username = (usernameNode.childNodes[0]) ? usernameNode.childNodes[0].nodeValue : '';
+                }
+
+                realnameNodes = node.getElementsByTagName('realname');
+                if (realnameNodes && realnameNodes[0]) {
+                    realnameNode = realnameNodes[0];
+                    realname = (realnameNode.childNodes[0]) ? realnameNode.childNodes[0].nodeValue : '';
+                }
+
+                emailNodes = node.getElementsByTagName('email');
+                if (emailNodes && emailNodes[0]) {
+                    emailNode = emailNodes[0];
+                    email = (emailNode.childNodes[0]) ? emailNode.childNodes[0].nodeValue : '';
+                }
+
+                id = node.getAttribute('id');
+
+                users[i] = {
+                    id: id,
+                    username: username,
+                    realname: realname,
+                    email: email
+                };
+            }
+
+            return users;
+        }
+        // 解析简单的XML
+        function parseSimpleXML(responseXML) {
+
+            var users = [];
+            var userNodes = responseXML.getElementsByTagName('user');
+
+            for (var i = 0, len = userNodes.length; i < len; i++) {
+                users[i] = {
+                    id: userNodes[i].getAttribute('id'),
+                    username: userNodes[i].getAttribute('username'),
+                    realname: userNodes[i].getAttribute('realname'),
+                    email: userNodes[i].getAttribute('email')
+                };
+            }
+
+            return users;
+        }
+
+
+        $('.btn').on('click', function () {
+            $.ajax({
+                url: '/format/getXml',
+                type: 'post',
+                success: function (res) {
+                    // console.log('res', res);
+                    var startTime = new Date().getTime();
+                    var users = parseXML(res);
+                    console.log('xml解析耗时', new Date().getTime() - startTime);
+                    //console.log('users', users);
+                    // var users = res.getElementsByTagName('user');
+                    // console.log('users[0]', users[0].getElementsByTagName('username')[0].textContent);
+                },
+                error: function (err) {
+                    console.log('err', err);
+                }
+            });
+        });
+
+        $('.btn2').on('click', function () {
+            $.ajax({
+                url: '/format/getJson',
+                type: 'post',
+                success: function (res) {
+                    // console.log('res', res);
+                    var startTime = new Date().getTime();
+                    eval('(' + res + ')');
+                    // console.log('users', eval('(' + res + ')'));
+                    console.log('json解析耗时', new Date().getTime() - startTime);
+                    // var users = res.getElementsByTagName('user');
+                    // console.log('users[0]', users[0].getElementsByTagName('username')[0].textContent);
+                },
+                error: function (err) {
+                    console.log('err', err);
+                }
+            });
+        });
+
+        $('.btn3').on('click', function () {
+            $.ajax({
+                url: '/format/getXml',
+                type: 'post',
+                data: {
+                    type: 2
+                },
+                success: function (res) {
+                    // console.log('res', res);
+                    var startTime = new Date().getTime();
+                    var users = parseSimpleXML(res);
+                    console.log('simple xml解析耗时', new Date().getTime() - startTime);
+                    //console.log('users', users);
+                    // var users = res.getElementsByTagName('user');
+                    // console.log('users[0]', users[0].getElementsByTagName('username')[0].textContent);
+                },
+                error: function (err) {
+                    console.log('err', err);
+                }
+            });
+        });
+
+        function jsonpcb (res) {
+            eval(res);
+        }
+
+        function parseCustom (res) {
+            var users = [];
+            var usersArr = res.split("\u0001");
+
+            for (var i = 0, len = usersArr.length; i < len; i++) {
+
+                userArray = usersArr[i].split("\u0002");
+
+                users[i] = {
+                    id: userArray[0],
+                    username: userArray[1],
+                    realname: userArray[2],
+                    email: userArray[3]
+                };
+            }
+
+            return users;
+        }
+
+        $('.btn4').on('click', function () {
+            $.ajax({
+                url: '/format/getJsonp',
+                type: 'post',
+                dataType: 'jsonp',
+                success: function (res) {
+                    // console.log('res', res);
+                    var parseStart = (new Date()).getTime();
+                    var result = jsonpcb(res);
+                    var parseTotal = (new Date()).getTime() - parseStart;
+                    console.log('json-p解析耗时', parseTotal);
+                    // var users = res.getElementsByTagName('user');
+                    // console.log('users[0]', users[0].getElementsByTagName('username')[0].textContent);
+                },
+                error: function (err) {
+                    console.log('err', err);
+                }
+            });
+        });
+
+        $('.btn5').on('click', function () {
+            $.ajax({
+                url: '/format/custom',
+                type: 'post',
+                success: function (res) {
+                    var startTime = new Date().getTime();
+                    var users = parseCustom(res);
+                    console.log('自定义格式解析耗时', new Date().getTime() - startTime);
+                    //console.log('users', users);
+                    // console.log('res', res);
+                    // var parseStart = (new Date()).getTime();
+                    // var result = jsonpcb(res);
+                    // var parseTotal = (new Date()).getTime() - parseStart;
+                    // console.log('json-p解析耗时', parseTotal);
+                    // var users = res.getElementsByTagName('user');
+                    // console.log('users[0]', users[0].getElementsByTagName('username')[0].textContent);
+                },
+                error: function (err) {
+                    console.log('err', err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

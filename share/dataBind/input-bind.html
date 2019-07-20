@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>input事件实现的绑定</title>
+</head>
+<body>
+<div>
+    <input class="input" type="text">
+    <p class="text"></p>
+</div>
+
+<script>
+    var data = {
+        text: ''
+    };
+    var $text = document.querySelector('.text');
+    document.querySelector('.input').addEventListener('input', function () {
+        data.text = this.value;
+        $text.innerHTML = data.text;
+    });
+</script>
+</body>
+</html>

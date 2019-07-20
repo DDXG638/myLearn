@@ -1,0 +1,485 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+
+	<title>Download and Parse Data Formats</title>
+
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.2.1/build/reset-fonts-grids/reset-fonts-grids.css"> 	
+
+	<style type="text/css">
+		#doc { width: 1500px; padding: 0 0 0; }
+
+		table { border-collapse: separate; border-spacing: 4px; }
+
+		table th { margin: 0 2px 2px 0; padding: 3px 6px; color: #888; font-weight: normal; background: #eee; text-align: right; font-size: 11px; }
+		table td { padding: 3px 6px; color: #222; font-weight: normal; text-align: right; font-size: 11px;  }
+		
+		table tr.first td { border-top: 1px solid #eee; }
+		
+		table th.label, table td.label { text-align: left; }
+		table td.label-done { text-align: left; background: #effad7; }
+		
+		table td.dl-per { background: #dce8f6; }
+		table td.parse-per { background: #fffdd3; }
+		table td.total-per { background: #effad7; }
+		
+		#user-list { display: none; }
+	</style>
+
+</head>
+<body>
+
+<div id="doc">
+
+	<div id="hd"></div>
+	<div id="bd">
+		
+	</div>
+	<div id="ft"><div id="user-list"></div></div>
+
+</div>
+
+<script>
+	
+	// Available sizes.
+
+	var listSizes = [100, 500, 1000, 5000];
+
+	// Available formats.
+       	
+	var formats = [
+		{ title: 'Verbose XML', bytesize: [11538, 57858, 115760, 582960] , filename: 'verbose_xml_%s.xml', type: 'XHR', parseFunc: parseXML },
+		{ title: 'Simple XML', bytesize: [8638, 43358, 86760, 437960], filename: 'simple_xml_%s.xml', type: 'XHR', parseFunc: parseSimpleXML },
+		{ title: 'Verbose JSON', bytesize: [9574, 48294, 96695, 487895], filename: 'verbose_json_%s.js', type: 'XHR', parseFunc: parseVerboseJSON },
+		{ title: 'Simple JSON', bytesize: [7674, 38794, 77695, 392895], filename: 'simple_json_%s.js', type: 'XHR', parseFunc: parseSimpleJSON },
+		{ title: 'Array JSON', bytesize: [5674, 28794, 57695, 292895], filename: 'array_json_%s.js', type: 'XHR', parseFunc: parseArrayJSON },
+		{ title: 'Verbose JSON', bytesize: [9592, 48312, 96713, 487913], filename: 'verbose_json_cb_%s.js', type: 'Script Insertion' },
+		{ title: 'Simple JSON', bytesize: [7692, 38812, 77713, 392913], filename: 'simple_json_cb_%s.js', type: 'Script Insertion' },
+		{ title: 'Array JSON', bytesize: [5691, 28811, 57712, 292912], filename: 'array_json_cb_%s.js', type: 'Script Insertion' },
+		{ title: 'HTML', bytesize: [21105, 105865, 211816, 1063416], filename: 'html_%s.html', type: 'XHR', parseFunc: insertHTML },
+		{ title: 'Custom Format', bytesize: [4271, 21791, 43692, 222892], filename: 'custom_%s.txt', type: 'XHR', parseFunc: parseCustomFormat },
+		{ title: 'Custom Format', bytesize: [4291, 21811, 43712, 222912], filename: 'custom_cb_%s.txt', type: 'Script Insertion' }
+	];
+
+	// Download and parse each of the lists, 32 in total. Keep track of timing information.
+
+	var queue = [];
+	var timings = {};
+	var completes = {};
+	
+	var repetitions = 10;
+
+	var output = '<table cellspacing="10"><tbody><tr><th class="label">Format</th><th class="label">Method</th><th>Users</th><th>Size (in bytes)</th><th>DL time (mean)</th><th>DL time (min)</th><th>DL time (max)</th><th>Parse time (mean)</th><th>Parse time (min)</th><th>Parse time (max)</th><th>Total load time (ms)</th><th>DL time per user (ms)</th><th>Parse time per user (ms)</th><th>Total load time per user (ms)</th><th>Bytes per user</th></tr>';
+	var format, size, id;
+
+	for (var n = 0, len = formats.length; n < len; n++) {
+		format = formats[n];
+
+		for (var m = 0, mLen = listSizes.length; m < mLen; m++) {
+			size = listSizes[m]
+			id = n + '-' + m;
+
+			output += '<tr' + (m === 0 ? ' class="first"' : '') + '>';
+			output += '<td id="title-' + id + '" class="label">' + format.title + '</td>';
+			output += '<td class="label">' + format.type + '</td>';			
+			output += '<td>' + size + '</td>';
+			output += '<td>' + format.bytesize[m] + '</td>';
+			output += '<td id="dl-mean-' + id + '"></td>';
+			output += '<td id="dl-min-' + id + '"></td>';
+			output += '<td id="dl-max-' + id + '"></td>';
+			output += '<td id="parse-mean-' + id + '"></td>';
+			output += '<td id="parse-min-' + id + '"></td>';
+			output += '<td id="parse-max-' + id + '"></td>';
+			output += '<td id="total-' + id + '"></td>';
+			output += '<td id="dl-per-' + id + '" class="dl-per"></td>';
+			output += '<td id="parse-per-' + id + '" class="parse-per"></td>';
+			output += '<td id="total-per-' + id + '" class="total-per"></td>';
+
+			output += '<td>' + (format.bytesize[m] / size).toFixed(1) + '</td>';
+			output += '</tr>';
+			
+			for (var p = 0; p < repetitions; p++) {
+				queue.push({ id: id, size: size, filename: format.filename.replace(/%s/, size), type: format.type, parseFunc: format.parseFunc, isXML: format.title.search(/XML/) !== -1 });
+			}
+			completes[id] = 0;
+		}
+	}
+	
+	output += '</tbody></table>';
+	
+	document.getElementById('bd').innerHTML = output;
+	
+	// Flush the queue, one at a time.
+	var dlStart, currentId, currentSize;
+	function shiftQueue() {
+
+		var current = queue.shift();
+		var url = '/formats/' + current.filename + '?cb=' + (new Date()).getTime();
+		var result, dlTotal, parseTotal;
+
+		if (current.type === 'XHR') {
+
+			var req = new XMLHttpRequest();
+			req.open('GET', url, true);
+
+			req.onreadystatechange = function() {
+				if (req.readyState == 4) {
+
+					dlTotal = (new Date()).getTime() - dlStart;
+
+					if (current.isXML) {
+						var parseStart = (new Date()).getTime();
+						result = current.parseFunc(req.responseXML);
+						console.log('req.responseXML', req.responseXML);
+						parseTotal = (new Date()).getTime() - parseStart;
+					}
+					else { 
+						var parseStart = (new Date()).getTime();
+						result = current.parseFunc(req.responseText);
+						parseTotal = (new Date()).getTime() - parseStart;						
+					}
+
+					if (!timings[current.id]) {
+						timings[current.id] = {
+							dl: [],
+							parse: []
+						};
+					}
+					
+					timings[current.id].dl.push(dlTotal);
+					timings[current.id].parse.push(parseTotal);
+
+					updateTimings(current.id, current.size);
+					
+					if (++completes[current.id] == 10) {
+						document.getElementById('title-' + current.id).className = 'label-done';
+					}
+
+					// Move on to the next item.
+					
+					shiftQueue();
+				}
+			}
+
+			dlStart = (new Date()).getTime();
+			req.send(null);
+
+		}
+		else { // Callback
+			
+			currentId = current.id;
+			currentSize = current.size;
+			
+			var script = document.createElement('script');
+			script.src = url;
+			
+			dlStart = (new Date()).getTime();
+			document.getElementsByTagName('head')[0].appendChild(script);
+		}
+		
+	}
+	shiftQueue();
+	
+	// Wrappers.
+
+	function parseVerboseJSON_cb(responseText) {
+
+		var dlTotal = (new Date()).getTime() - dlStart;
+
+		var parseStart = (new Date()).getTime();
+		var result = parseVerboseJSON(responseText);
+		var parseTotal = (new Date()).getTime() - parseStart;						
+
+		if (!timings[currentId]) {
+			timings[currentId] = {
+				dl: [],
+				parse: []
+			};
+		}
+		
+		timings[currentId].dl.push(dlTotal);
+		timings[currentId].parse.push(parseTotal);
+
+		updateTimings(currentId, currentSize);
+		
+		if (++completes[currentId] == 10) {
+			document.getElementById('title-' + currentId).className = 'label-done';
+		}
+
+		// Move on to the next item.
+		
+		shiftQueue();
+	}
+
+	function parseSimpleJSON_cb(responseText) {
+
+		var dlTotal = (new Date()).getTime() - dlStart;
+
+		var parseStart = (new Date()).getTime();
+		var result = parseSimpleJSON(responseText);
+		var parseTotal = (new Date()).getTime() - parseStart;						
+
+		if (!timings[currentId]) {
+			timings[currentId] = {
+				dl: [],
+				parse: []
+			};
+		}
+		
+		timings[currentId].dl.push(dlTotal);
+		timings[currentId].parse.push(parseTotal);
+
+		updateTimings(currentId, currentSize);
+		
+		if (++completes[currentId] == 10) {
+			document.getElementById('title-' + currentId).className = 'label-done';
+		}
+
+		// Move on to the next item.
+		
+		shiftQueue();		
+	}
+	
+	function parseArrayJSON_cb(responseText) {
+
+		var dlTotal = (new Date()).getTime() - dlStart;
+
+		var parseStart = (new Date()).getTime();
+		var result = parseArrayJSON(responseText);
+		var parseTotal = (new Date()).getTime() - parseStart;						
+
+		if (!timings[currentId]) {
+			timings[currentId] = {
+				dl: [],
+				parse: []
+			};
+		}
+		
+		timings[currentId].dl.push(dlTotal);
+		timings[currentId].parse.push(parseTotal);
+
+		updateTimings(currentId, currentSize);
+		
+		if (++completes[currentId] == 10) {
+			document.getElementById('title-' + currentId).className = 'label-done';
+		}
+
+		// Move on to the next item.
+		
+		shiftQueue();		
+	}
+	
+	function parseCustomFormat_cb(responseText) {
+
+		var dlTotal = (new Date()).getTime() - dlStart;
+
+		var parseStart = (new Date()).getTime();
+		var result = parseCustomFormat(responseText);
+		var parseTotal = (new Date()).getTime() - parseStart;						
+
+		if (!timings[currentId]) {
+			timings[currentId] = {
+				dl: [],
+				parse: []
+			};
+		}
+		
+		timings[currentId].dl.push(dlTotal);
+		timings[currentId].parse.push(parseTotal);
+
+		updateTimings(currentId, currentSize);
+		
+		if (++completes[currentId] == 10) {
+			document.getElementById('title-' + currentId).className = 'label-done';
+		}
+
+		// Move on to the next item.
+		
+		shiftQueue();		
+	}
+	
+	// Update the UI.
+	
+	function updateTimings(id, size) {
+		
+		var data = timings[id];
+		
+		// DL
+
+		var dlTotal = 0, dlMean, dlMin = 9e9999, dlMax = 0;
+		for (var n = 0, len = data.dl.length; n < len; n++) {
+			dlTotal += data.dl[n];
+			if (data.dl[n] < dlMin) {
+				dlMin = data.dl[n];
+			}
+			if (data.dl[n] > dlMax) {
+				dlMax = data.dl[n];
+			}
+		}
+		dlMean = dlTotal / len;
+		
+		// Parse
+
+		var parseTotal = 0, parseMean, parseMin = 9e9999, parseMax = 0;
+		for (var n = 0, len = data.dl.length; n < len; n++) {
+			parseTotal += data.parse[n];
+			if (data.parse[n] < parseMin) {
+				parseMin = data.parse[n];
+			}
+			if (data.parse[n] > parseMax) {
+				parseMax = data.parse[n];
+			}
+		}
+		parseMean = parseTotal / len;
+		
+		// Insert into the page.
+
+		document.getElementById('dl-mean-' + id).innerHTML = dlMean.toFixed(1);
+		document.getElementById('dl-min-' + id).innerHTML = dlMin.toFixed(1);
+		document.getElementById('dl-max-' + id).innerHTML = dlMax.toFixed(1);
+		document.getElementById('parse-mean-' + id).innerHTML = parseMean.toFixed(1);
+		document.getElementById('parse-min-' + id).innerHTML = parseMin.toFixed(1);
+		document.getElementById('parse-max-' + id).innerHTML = parseMax.toFixed(1);
+		document.getElementById('total-' + id).innerHTML = (dlMean + parseMean).toFixed(1);
+		document.getElementById('total-per-' + id).innerHTML = ((dlMean + parseMean) / size).toFixed(3);
+		document.getElementById('parse-per-' + id).innerHTML = (parseMean / size).toFixed(3);
+		document.getElementById('dl-per-' + id).innerHTML = (dlMean / size).toFixed(3);
+	}
+	
+	// 解析XML
+	
+	function parseXML(responseXML) {
+
+		var users = [];
+		var userNodes = responseXML.getElementsByTagName('user');
+		var node, usernameNodes, usernameNode, username,
+		realnameNodes, realnameNode, realname,
+		emailNodes, emailNode, email, id;
+
+		for (var i = 0, len = userNodes.length; i < len; i++) {
+
+			node = userNodes[i];
+			username = realname = email = '';
+
+			usernameNodes = node.getElementsByTagName('username');
+			if (usernameNodes && usernameNodes[0]) {
+				usernameNode = usernameNodes[0];
+				username = (usernameNodes.firstChild) ? usernameNodes.firstChild.nodeValue : '';
+			}
+
+			realnameNodes = node.getElementsByTagName('realname');
+			if (realnameNodes && realnameNodes[0]) {
+				realnameNode = realnameNodes[0];
+				realname = (realnameNodes.firstChild) ? realnameNodes.firstChild.nodeValue : '';
+			}
+
+			emailNodes = node.getElementsByTagName('email');
+			if (emailNodes && emailNodes[0]) {
+				emailNode = emailNodes[0];
+				email = (emailNodes.firstChild) ? emailNodes.firstChild.nodeValue : '';
+			}
+
+			id = node.getAttribute('id');
+
+			users[i] = {
+				id: id,
+				username: username,
+				realname: realname,
+				email: email
+			};
+		}
+
+		return users;
+	}
+
+	// 解析简单的XML
+	function parseSimpleXML(responseXML) {
+    
+	    var users = [];
+	    var userNodes = responseXML.getElementsByTagName('user');
+    
+	    for (var i = 0, len = userNodes.length; i < len; i++) {
+	        users[i] = {
+	            id: userNodes[i].getAttribute('id'),
+	            username: userNodes[i].getAttribute('username'),
+	            realname: userNodes[i].getAttribute('realname'),
+	            email: userNodes[i].getAttribute('email')
+	        };
+	    }
+    
+	    return users;
+	}
+
+	//
+	
+	function parseVerboseJSON(responseText) {
+	    return eval(responseText);
+	}
+
+	function parseSimpleJSON(responseText) {
+
+	    var users = [];
+	    var usersSimple = eval(responseText);
+
+	    for (var i = 0, len = usersSimple.length; i < len; i++) {
+	        users[i] = {
+	            id: usersSimple[i].i,
+	            username: usersSimple[i].u,
+	            realname: usersSimple[i].r,
+	            email: usersSimple[i].e
+	        };
+	    }
+    
+	    return users;
+	}	
+
+	function parseArrayJSON(responseText) {
+
+	    var users = [];
+	    var usersArray = eval(responseText);
+
+	    for (var i = 0, len = usersArray.length; i < len; i++) {
+	        users[i] = {
+	            id: usersArray[i][0],
+	            username: usersArray[i][1],
+	            realname: usersArray[i][2],
+	            email: usersArray[i][3]
+	        };
+	    }
+    
+	    return users;
+	}
+	
+	//
+	
+	function insertHTML(responseText) {
+    
+	    document.getElementById('user-list').innerHTML = responseText;
+	}	
+
+	//
+	
+	function parseCustomFormat(responseText) {
+
+	    var users = [];
+	    var usersEncoded = responseText.split("\u0001");
+
+	    for (var i = 0, len = usersEncoded.length; i < len; i++) {
+
+	        userArray = usersEncoded[i].split("\u0002");
+
+	        users[i] = {
+	            id: userArray[0],
+	            username: userArray[1],
+	            realname: userArray[2],
+	            email: userArray[3]
+	        };
+	    }
+    
+	    return users;
+	}	
+	
+</script>
+
+</body>
+</html>

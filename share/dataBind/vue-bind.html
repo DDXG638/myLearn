@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>input事件实现的绑定</title>
+</head>
+<body>
+<div id="app">
+    <input class="input" type="text" v-model="text">
+    <p class="text">{{text}}</p>
+    <hr>
+    <button @click="text = text + text">change</button>
+    <ul>
+        <li v-for="(item,index) in arr" :key="index">
+            {{item}}
+        </li>
+    </ul>
+</div>
+
+<script src="../../../../vue/dist/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            text: '222',
+            arr: [1,2,3]
+        }
+    });
+</script>
+</body>
+</html>

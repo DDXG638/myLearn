@@ -42,7 +42,7 @@
             ongoingTouches.push(touches[i]);
             var color = colorForTouch(touches[i]);
             ctx.fillStyle = color;
-            ctx.fillRect(touches[i].pageX - 2, touches[i].pageY - 2, 4, 4);
+            ctx.fillRect(touches[i].pageX - 2, touches[i].pageY - 2, 10, 10);
             // ctx.arc(touches[i].pageX, touches[i].pageY, 2 ,0, Math.PI * 2, true);
         }
     }
@@ -53,7 +53,7 @@
         var ctx = $canvas.getContext("2d");
         var touches = evt.changedTouches;
 
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 10;
 
         for (var i=0; i < touches.length; i++) {
             var color = colorForTouch(touches[i]);
@@ -75,7 +75,7 @@
         var ctx = $canvas.getContext("2d");
         var touches = evt.changedTouches;
 
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 10;
 
         for (var i=0; i<touches.length; i++) {
             var color = colorForTouch(touches[i]);
@@ -84,8 +84,13 @@
             ctx.beginPath();
             ctx.moveTo(ongoingTouches[i].pageX, ongoingTouches[i].pageY);
             ctx.lineTo(touches[i].pageX, touches[i].pageY);
-            ongoingTouches.splice(i, 1);  // 删除触摸点
+            // ongoingTouches.splice(i, 1);  // 删除触摸点
+
         }
+
+        ongoingTouches = [];
+
+        console.log('ongoingTouches', ongoingTouches);
     }
 
     function handleCancel(evt) {

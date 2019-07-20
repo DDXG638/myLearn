@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>simple-bind</title>
+</head>
+<body>
+<div>
+    <input class="input" type="text">
+    <p class="text"></p>
+</div>
+
+<script>
+    var data = {
+        text: ''
+    };
+
+    Object.defineProperty(data, 'text', {
+        set: function(val) {
+            console.log('set');
+            text = val;
+            $text.innerHTML = text;
+            $input.value = text;
+        },
+        get: function () {
+            console.log('get');
+            return text;
+        },
+        enumerable : true,
+        configurable : true
+    });
+
+
+    var $text = document.querySelector('.text');
+    var $input = document.querySelector('.input');
+    $input.addEventListener('input', function () {
+        data.text = this.value;
+    });
+</script>
+</body>
+</html>

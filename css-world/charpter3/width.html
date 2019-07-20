@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>width</title>
+    <style>
+        .ao, .tu {
+            display: inline-block;
+            width: 0;
+        }
+
+        .ao:before {
+            content: '我love我';
+            outline: 1px solid red;
+        }
+        .tu:before {
+            content: 'love我love';
+            outline: 1px solid red;
+        }
+        .tu {
+            margin-left: 150px;
+            direction: rtl;
+        }
+    </style>
+</head>
+<body>
+<p>实现凹凸轮廓</p>
+<span style="direction: rtl;unicode-bidi: bidi-override;">实现凹凸轮廓</span>
+<input type="text" style="outline:1px solid blue;">
+
+<div class="aotu">
+    <span class="ao"></span>
+    <span class="tu"></span>
+</div>
+
+
+</body>
+</html>
