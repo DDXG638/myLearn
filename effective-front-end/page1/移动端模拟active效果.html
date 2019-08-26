@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>移动端模拟active效果</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+
+        li {
+            width: 50px;
+            height: 80px;
+            background: #eee;
+        }
+
+        /* 使用css */
+        li:active {
+            background: red;
+        }
+
+        li:active {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>111</li>
+        <li>222</li>
+        <li>333</li>
+        <li>444</li>
+    </ul>
+
+    <script>
+        // 使用css时，加上这个效果会更好，没有验证过（应该是禁止touchstart的触发）。据说可以阻止移动端的hover
+        document.body.addEventListener('touchstart', function(){})
+    </script>
+
+    <script>
+        /* 使用js控制增删class来达到active效果，低端机的效果可能会有点 */
+        document.body.addEventListener('touchstart', '.js-clickable', function () {
+            $(this).addClass('hover');
+        });
+
+        document.body.addEventListener('touchend touchcancel', '.js-clickable', function () {
+            $(this).removeClass('hover');
+        });
+    </script>
+</body>
+</html>
