@@ -4,61 +4,71 @@
 	<title>鼠标悬浮显示菜单</title>
 </head>
 <style type="text/css">
-	.nav {
-		
-	}
-	.menu {
-		
-	}
-	ul,li {
-		list-style: none;
-	}
-	a {
-		text-decoration: none;
-	}
-	.menu .menu-li {
-		position: relative;
-		float: left;
-		width: 100px;
-		height: 50px;
-		background: #ccc;
-	}
+    .nav {
 
-	/* 关键，当菜单项hover的时候，显示子菜单 */
-	.menu .menu-li:hover .menu-son {
-		display: list-item;
-	}
+    }
+    .menu {
 
-	.menu a {
-		display: block;
-		width: 100%;
-		height: 100%;
-		line-height: 50px;
-		text-align: center;
-		font-size: 18px;
-		color: #aaa;
-	}
+    }
+    ul,li {
+        list-style: none;
+    }
+    a {
+        text-decoration: none;
+    }
 
-	.menu .menu-son {
-		display: none;
-		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translate(-50%, 0);
-	}
-	.menu .menu-son a {
-		display: block;
-		width: 120px;
-		height: 20px;
-		line-height: 20px;
-		text-align: center;
-		font-size: 16px;
-		border-bottom: 1px solid #999;
-		background: #ccc;
-		color: #aaa;
-	}
+    .menu .menu-li {
+        position: relative;
+        float: left;
+        width: 100px;
+        height: 50px;
+        background: #ccc;
+    }
+
+    /* 关键，当菜单项hover的时候，显示子菜单 */
+    .menu .menu-li:hover .menu-son {
+        /*display: list-item;*/
+        max-height: 100px;
+    }
+
+    .menu a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        line-height: 50px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .menu .menu-son {
+        /*display: none;*/
+        /* 加点动画 */
+        max-height: 0;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        transition: max-height 0.2s;
+        overflow: hidden;
+    }
+    .menu .menu-son a {
+        display: block;
+        width: 120px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        font-size: 16px;
+        border-bottom: 1px solid #999;
+        background: #ccc;
+        color: #aaa;
+    }
 </style>
 <body>
+<!--
+    有个问题可能会有点棘手：
+    PC端需要导航栏hover的效果，移动端有些浏览器没有hover就用点击来触发，重点是移动端浏览器有些又支持hover
+    我觉得要使用媒体查询，如果是PC的尺寸则实现hover的样式；如果js判断到是移动端的尺寸则添加点击事件代码
+-->
 <!-- 子菜单包在菜单项里面（较方便） -->
 	<div class="nav">
 		<ul class="menu">
