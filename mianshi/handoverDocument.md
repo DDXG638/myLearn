@@ -2,7 +2,7 @@
 
 ## 任务中心
 
-#### 概要
+### 概要
 
 页面入口：
 - 任务中心：app -> me -> Earn Rewards
@@ -21,11 +21,11 @@
 - 签到页面，未签到则跳到签到页面，已签到则跳到任务中心页面
 
 
-#### 技术细节
+### 技术细节
 
 具体的页面流程，不多说了，这里详细讲任务系统。
 
-##### 任务数据
+#### 任务数据
 
 任务系统的每个任务，包括签到任务，都是一个任务,具体可以查看wiki[获取任务列表](http://wiki.ihuayue.cn/pages/viewpage.action?pageId=5669599)，有不懂的可以问问后台-周林
 
@@ -132,7 +132,7 @@
 上面的是我觉得比较关键的任务字段，有些任务可能会特殊一些，会有自己特有的字段，像签到任务就有`sign_info`、`sign_cur_month`、`list`、`total_num`等特有字段
 
 
-##### 任务判断条件
+#### 任务判断条件
 上面页提到了任务分为两种类型：
 - 服务端判断的任务，由服务端判断是否完成，拉取任务数据之后根据status的值判断就行
 - 客户端判断的任务，这些任务需要结合客户端（app）本地记录的数据判断任务是否可以完成，比如阅读任务，阅读时长数据是客户端记录在本地的，服务端没有存储，就需要先从客户端获取阅读时长数据，再判断任务是否完成。
@@ -150,7 +150,7 @@
 比如：每日加入书架数 用 `bookshelfNovelDay` 表示。。。
 
 
-##### 任务判断逻辑
+#### 任务判断逻辑
 
 关键代码：`front/www_src/task-center-vue/src/store/modules/task.js -> getTaskProgress`
 
@@ -199,7 +199,7 @@ AppJsBridge.getTaskProgress(taskProgress => {
 });
 ```
 
-##### 任务跳转逻辑
+#### 任务跳转逻辑
 
 > 每个未完成的任务都有对应跳转去完成任务的操作，像充值任务就跳到充值中心页面，阅读任务就跳转到书城或者书架。
 > 这些跳转的位置是由前端维护的，在任务管理后台配置任务的时候填写
@@ -210,14 +210,14 @@ AppJsBridge.getTaskProgress(taskProgress => {
 
 
 
-##### 任务完成逻辑
+#### 任务完成逻辑
 关键代码：`front/www_src/task-center-vue/src/store/modules/task.js -> actions.finishTask`
 
 v1.2版本在完成任务的接口加了签名校验，需要调用`AppJsBridge.encryptData`桥增加签名`sign`字段
 
 
 
-##### 跟客户端相关的任务交互
+#### 跟客户端相关的任务交互
 - getTaskProgress桥，从客户端获取任务进度数据
 - encryptData桥，完成任务的加密签名
 - postTaskH5桥，将任务数据传递给客户端，因为客户端页面也有处理任务的相关逻辑，正常情况下客户端只有在启动app的时候才会拉取任务数据，H5页面中有更改任务状态的任何操作之后都要及时的给客户端传递新的任务数据，像完成某一个任务之后就要调用这个桥通知客户端。
@@ -231,7 +231,7 @@ pageActive桥的应用场景：
 
 
 
-#### 任务管理后台
+### 任务管理后台
 
 > 任务管理后台可以查看、修改所有任务数据，可以根据用户qid查找该用户可以获取的所有任务信息。
 > 不懂就问 后台-周林
@@ -242,7 +242,7 @@ pageActive桥的应用场景：
 
 
 
-#### 任务中心环境
+### 任务中心环境
 
 因为测试环境没有https，所以所有H5页面的url和接口url都需要是http的，做如下更改：将https改为http
 
@@ -313,7 +313,7 @@ Kibana平台的使用可以百度一下。后台负责人是 周林
 
 这个wiki记录了大部分H5页面的url[海外H5链接总汇](http://wiki.ihuayue.cn/pages/viewpage.action?pageId=7275860)
 
-#### 普通单页 
+### 普通单页 
 `front/www_src/dreame/app`这个目录里面的H5一般是相对比较简单的页面，一般只用zepto.js库实现。有动态渲染的页面一般使用`art-template`前端渲染模板。
 
 需要注意：
@@ -322,7 +322,7 @@ Kibana平台的使用可以百度一下。后台负责人是 周林
 - `cssLibs/common.styl`里面定义了两个字体：`Roboto-Regular`和`Roboto-Medium`，这个是UI设计确定的字体，只用这两个。不然UI大大会找你麻烦的。
 
 
-#### vue项目
+### vue项目
 
 `front/www_src/task-center-vue`这种的页面一般是使用vue框架实现的，功能逻辑可能会复杂一点点。
 
@@ -348,22 +348,22 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 
 > 做H5活动的时候需要自行考虑使用哪种类型的页面，尽量然页面轻量一些，因为海外项目涉及的国家很广，一些不发达的国家像印度、菲律宾等网络环境很差的，可能加载一张图片都卡半天，而且他们使用的手机普遍较差，性能堪忧。主要是要想办法优化js的加载。
 
+> vue项目一般上线执行的命令是 `npm run deploy`，这个命令不是固定的，只是现在都用这个。这个命令执行的逻辑是将vue项目打包出来的js和css上传到cdn，然后以外链的形式加载资源。
 
 
-
-#### 拉新榜单活动
+### 拉新榜单活动
 
 - 需求链接：[【拉新活动】榜单](http://jira.ihuayue.cn/browse/DA-267?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
 - 代码位置：`overseas/front/www_src/dreameVue/invite`
 - vue项目
 
-#### 召回活动
+### 召回活动
 
 - 需求链接：[召回活动H5](http://jira.ihuayue.cn/browse/DA-341?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)、[H5 - 召回活动调整](http://jira.ihuayue.cn/browse/DP-69?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
 - 代码位置：`overseas/front/www_src/dreame/app/tpls/recallAct`
 - 普通H5
 
-#### 新版首充活动
+### 新版首充活动
 
 - 需求链接：这个是运营穿插的需求，没有需求链接。习惯就好。
 - 代码位置：`overseas/front/www_src/dreame/app/tpls/chargeActNew`
@@ -371,19 +371,23 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 
 > 这个活动是旧版首充活动 微改后的新页面，主要改动的地方是，前端写死充值金额，并且加入`getLocalCurrency`js桥
 
-#### 订阅页面
+### 订阅页面
 
 - 需求链接：[H5 - 自动订阅](http://jira.ihuayue.cn/browse/DA-391?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
 - 代码位置：`overseas/front/www_src/dreameVue/bundle`
 - vue项目
 
-#### 复充活动
+### 复充活动
 
 - 需求链接：[H5 - 复充活动](http://jira.ihuayue.cn/browse/DP-74?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
 - 代码位置：`overseas/front/www_src/dreame/app/tpls/doubleRecharge`
 - 普通H5
 
 ### pc和wap站公用的邮箱登录模块
+
+> 这个页面是wap站和pc站公用一套代码的，通过响应式展示两端不同的样式
+> 构建的时候有一点点不同，有一个复制的操作，主要是pc站和wap站的静态文件目录不是同一个。
+> 代码都是同一套，只是在将html、js和css文件输出到wap站的静态目录之后再将文件复制到pc站的静态目录。具体可以查看代码目录下面的`package.json`文件中的命令。
 
 - 需求链接：[wap - 邮箱登录](http://jira.ihuayue.cn/browse/DA-447?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)、[WAP - 邮箱注册](http://jira.ihuayue.cn/browse/DA-443?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)、[wap - 忘记密码](http://jira.ihuayue.cn/browse/DA-451?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
 - 代码位置：`overseas/front/www_src/dreameVue/emailLogin`
@@ -394,9 +398,15 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 
 ## 奇技淫巧
 
-#### app内嵌H5调试方法
-- [腾讯X5内核调试](https://x5.tencent.com/tbs/guide/debug/season1.html),只能调试安卓，iOS无能为力，网上也有window调试iOS webview的的博客教程，但是我尝试了两次都失败了。如果对iOS真的束手无策了就找ios同时跑Xcode然后再safari浏览器中调试把。
-- 类似`vconsole`的东西
+> 这里是我在工作中的一些小经验和吐槽。
+
+### app内嵌H5调试方法
+- [腾讯X5内核调试](https://x5.tencent.com/tbs/guide/debug/season1.html)，只能调试安卓，iOS无能为力，网上也有window调试iOS webview的的博客教程，但是我尝试了两次都失败了。如果对iOS真的束手无策了就找ios同时跑Xcode然后再safari浏览器中调试把。
+- 类似`vconsole`的东西，dreame-app 1.3版本开始就因谷歌政策原因去除了X5内核改用安卓原生webview，这样的话，新版本中腾讯X5内核调试的方法估计不可用了。
+
+** 其实内嵌appH5页面真的是很难调试，我也没有找到什么比较好的调试方法。X5内核调试也不好用，一些比较高端的手机根本调式不了，打开调试页面就是一片空白。`vconsole`只适用于简单的调式，复杂的调试真的很难，样式的话基本调不了。 **
+
+** 对于不需要依赖客户端的js桥就能正常工作的H5页面最好就在浏览器上调试 **
 
 ``` html
 <script src="//file.dreame.com/static/354992b06bcd4d326ac9a4187665f140/eruda.js"></script>
@@ -409,22 +419,128 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 </script>
 ```
 
+### 客户端会在webview中种的cookie值
 
-#### Dreame u和s base64解码
+安卓和iOS保持一致
+
+![](http://file.ficfun.com/group1/M00/01/CC/rB84XV1l5iiANuQbAABLPsFJCzc761.png)
+
+
+### Dreame u和s base64解码
 
 只做参考，最终以你自己解的为准
 
 ![](http://file.ficfun.com/group1/M00/01/CA/rB84XV1k4A-AEZSXAAAncd_CwFM430.png)
 
-#### getUserInfo桥和getDeviceInfo桥获取的信息
+`bookshelfCount`：用户书架中的书的数量，v0.8版本加入。目的是实现：阅读任务跳转，书架有书就跳书架，没书就跳书城。
+`newUserIndex`：用户是新手第几天，用户任务中心的新手任务。
+
+### getUserInfo桥和getDeviceInfo桥获取的信息
 
 只做参考，最终以你自己解的为准
 
 ![](http://file.ficfun.com/group1/M00/01/CA/rB84XV1k4SqAM2dmAABKCnWxIQs941.png)
 
+后来还加了`interfaceCode`字段
 
-#### 发布系统
 
-前端 镜像 编译 目录：`home/q/system/pubsys_webroot/`
+### 发布系统
 
-发布系统有疑问就问 后台-周林
+对发布系统有疑问就问 后台-周林
+
+#### 前端发布配置
+
+``` json
+{
+    "front/www_src/task-center-vue": [
+        "front/src/application/views/dreame/api/tpls/app/taskCenter"
+    ],
+    "front/www_src/dreameVue/invite": [
+        "front/src/application/views/dreame/api/tpls/app/dreameVue"
+    ],
+    "front/www_src/dreameVue/bundle": [
+        "front/src/application/views/dreame/h5/tpls/dreameVue"
+    ],
+    "front/www_src/dreameVue/emailLogin": [
+        "front/src/application/views/dreame/mobile/tpls/user/emailLoginVue.html",
+        "front/src/application/views/dreame/pc/tpls/login/emailLoginVue.html"
+    ],
+    "front/www_src/task-center-ficfun-vue": [
+        "front/src/application/views/dreame/api/tpls/app/taskCenterFicfun"
+    ],
+    "manager/src/www_src": [
+        "manager/src/application/views/tpls/html/",
+        "manager/src/www/css/",
+        "manager/src/www/js/"
+    ],
+    "front/www_src/dreame/app": [
+        "front/src/application/views/dreame/api/tpls/app/version1.0",
+        "front/src/application/views/dreame/h5/tpls/singlePage"
+    ],
+    "front/www_src/dreame/pc": [
+        "front/src/application/views/dreame/pc/tpls",
+        "front/src/www/dreame/pc/js",
+        "front/src/www/dreame/pc/style"
+    ],
+    "front/www_src/dreame/mobile": [
+        "front/src/application/views/dreame/mobile/tpls",
+        "front/src/www/dreame/mobile/css",
+        "front/src/www/dreame/mobile/js",
+        "front/src/www/dreame/mobile/manifest.json",
+        "front/src/www/dreame/mobile/sw.js"
+    ]
+}
+```
+
+> 发布系统是根据git的diff对比来确定要发哪些文件的，对于前端来说是不好控制的。
+> 因为前端上线不会发源代码文件，基本都发通过构建工具打包后的文件，这些文件就基本都是不放在版本库里面的，所以不能通过git对比得出哪些文件要发。
+> 因此，就有了上面的前端发布配置文件。
+
+配置文件的`key`是要构建的源码目录，`value`是一个数组，指定构建完之后要发布文件目录或者文件名（这些文件基本都是构建出来的，不在git仓库里面的）
+
+创建上线单关键步骤：
+- 发布的时候需要选择 前端发布
+- 选择要发布的模块，就是`key`
+- 要执行构建工具的命令
+
+![](http://file.ficfun.com/group1/M00/01/CC/rB84XV1mFwOAYpqKAAAiqwEdtOw048.png)
+
+有几点需要特别注意：
+- 如果新增了一个新的项目文件夹 或者 发布的路径有改动，发布前就要更新这个配置数据，需要新增key和value，配置找 后台-周林 要
+- 前端用的依赖（`package.json`）是经常会更改的，如果有更改发布的时候就需要先执行`npm install`命令然后再执行其他命令。发布系统正常是会帮我们判断`package.json`是否有更改的，有更改就会自动执行`npm install`操作。但是，发布系统有bug，不是每次都能准确判断，所以最稳妥的方法是显示的执行，类似：`npm install && npm run deploy`
+- overseas 编译的镜像目录：测试机器的`/home/q/system/pubsys_webroot/2`这个目录，如果有什么东西要改的可以直接再这个目录里面更改。一般是创建一些目录 或者 发布失败 等情况下才会去这个目录做操作。
+
+
+
+### 手动发布
+
+> 有时在比较紧机的情况下会选择手动发布。比如节假日处理一些线上紧急的问题。对前端发布来说，手动发布和发布系统发布混用会造成一些混乱，最好只用发布系统发布。
+
+命令：
+
+``` 
+env ENV_ONLINE=online sh deploy/deploy.sh [file1 file2 ...]
+```
+
+发布前命令最好找后台同事确认
+
+
+
+### 清除缓存
+
+Oversea线上的机器：
+```
+172.31.56.118
+172.31.56.93
+172.31.56.94
+172.31.56.95
+172.31.56.96
+```
+
+在预发机器直接 `ssh 172.31.56.118` 到线上机器，然后清除你要清除缓存的目录，都是不同路径下的`templates_c`目录
+
+```
+rm -f /home/q/system/overseas/front/src/application/views/dreame/pc/templates_c/*
+```
+
+有后台同事在就找后台的同事操作
