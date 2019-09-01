@@ -1,6 +1,6 @@
 module.exports = {
     devServer: {
-        host: 'www.ddxg.com',
+        host: 'dev.dreame.com',
         port: 8066
     },
     productionSourceMap: false,
@@ -40,11 +40,27 @@ module.exports = {
                 }
             }
         });
+
+        config.module
+            .rule('stylus')
+            .oneOf('vue')
+            .use('px2rem-loader')
+            .loader('px2rem-loader')
+            .before('postcss-loader') // this makes it work.
+            .options({ remUnit: 100, remPrecision: 8 })
+            .end()
     },
     css: {
         extract: {
             filename: 'css/[name].css?hash=[contenthash]',
             chunkFilename: 'css/[name].css?hash=[contenthash]'
         },
+        /*loaderOptions: {
+            postcss: {
+                plugins: [require('postcss-px2rem')({
+                    remUnit: 100
+                })]
+            }
+        }*/
     },
 }

@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>vue-task</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but vue-home doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>vue-home</title>
+  <script>
+      (function(window, html) {
+          var designWidth = 720;
+          function recalc() {
+              var windowWidth = html.clientWidth;
+              var fontSize = windowWidth / designWidth * 100;
+              setFontSize(fontSize);
+              var completedFontSize = getFontSize();
+              if (Math.abs(completedFontSize - fontSize) > 0.1) {
+                  setFontSize(fontSize * fontSize / completedFontSize);
+              }
+          }
+          function setFontSize(fontSize) {
+              html.style.fontSize = fontSize + 'px';
+          }
+          function getFontSize() {
+              return parseFloat(window.getComputedStyle(html)['font-size']);
+          }
+          window.calcRem = function(width) {
+              designWidth = width;
+              recalc();
+              window.addEventListener('resize', recalc);
+          }
+      }(window, document.documentElement));
+  </script>
+  <script>calcRem(360)</script>
+</head>
+<body>
+<noscript>
+  <strong>We're sorry but vue-home doesn't work properly without JavaScript enabled. Please enable it to
+    continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
 </html>
