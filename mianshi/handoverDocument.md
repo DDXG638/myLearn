@@ -11,8 +11,8 @@
 代码位置：overseas -> `front/www_src/task-center-vue`
 
 需求单： 
-- [H5 - 任务中心（福利中心）](http://jira.ihuayue.cn/browse/DA-254?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
-- [h5 签到](http://jira.ihuayue.cn/browse/DA-251?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
+- [H5 - 任务中心（福利中心）](http://jira.ihuayue.cn/browse/DA-254)
+- [h5 签到](http://jira.ihuayue.cn/browse/DA-251)
 
 
 页面：
@@ -213,7 +213,7 @@ AppJsBridge.getTaskProgress(taskProgress => {
 #### 任务完成逻辑
 关键代码：`front/www_src/task-center-vue/src/store/modules/task.js -> actions.finishTask`
 
-v1.2版本在完成任务的接口加了签名校验，需要调用`AppJsBridge.encryptData`桥增加签名`sign`字段
+v1.2版本在完成任务的接口加了签名校验，需要调用`AppJsBridge.encryptData`桥增加签名`sign`字段，主要目的是为了防止用户刷任务完成的接口
 
 
 
@@ -272,7 +272,9 @@ $sign = 'http://'.$domain.'/Act/taskCenter?originProduct='.$this->originProduct.
 我是不建议看这个，直接看代码更快更全面，因为程序员一般都不喜欢写`README.md`文件。
 我加的js桥都有写注释的，有些比较老的js桥没有注释就直接在overseas项目里面搜索一下看看以前是在什么场景下使用的。
 
+目前发现两个平台处理逻辑不一致的js桥有：`getLocalCurrency` 和 `encryptData`。
 
+新增js桥的时候，安卓和iOS的同事最好碰一下实现方式，最好做到统一。
 
 
 ## 前端错误上报 和 Kibana
@@ -284,6 +286,8 @@ $sign = 'http://'.$domain.'/Act/taskCenter?originProduct='.$this->originProduct.
 前端QQ群里面有两个分享是跟前端监控和错误上报相关的ppt，错误上报的代码也是参考上面的内容实现的。
 
 代码位置：`front/www_src/task-center-vue/src/utils/errorPost.js`
+
+我简单封装了一下，[post-error-overseas](http://gitlab.ihuayue.cn/hyfe/post-error-overseas)
 
 数据是上报到我们的[后台日志系统Kibana](http://172.31.62.16:8888/app/kibana#/discover)
 
@@ -350,16 +354,18 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 
 > vue项目一般上线执行的命令是 `npm run deploy`，这个命令不是固定的，只是现在都用这个。这个命令执行的逻辑是将vue项目打包出来的js和css上传到cdn，然后以外链的形式加载资源。
 
+上传cdn的代码并且替换页面链接的代码基本用的是同一套。以任务中心为例：`overseas/front/www_src/task-center-vue/build/upload-cdn.js`
+
 
 ### 拉新榜单活动
 
-- 需求链接：[【拉新活动】榜单](http://jira.ihuayue.cn/browse/DA-267?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
+- 需求链接：[【拉新活动】榜单](http://jira.ihuayue.cn/browse/DA-267)
 - 代码位置：`overseas/front/www_src/dreameVue/invite`
 - vue项目
 
 ### 召回活动
 
-- 需求链接：[召回活动H5](http://jira.ihuayue.cn/browse/DA-341?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)、[H5 - 召回活动调整](http://jira.ihuayue.cn/browse/DP-69?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
+- 需求链接：[召回活动H5](http://jira.ihuayue.cn/browse/DA-341)
 - 代码位置：`overseas/front/www_src/dreame/app/tpls/recallAct`
 - 普通H5
 
@@ -373,15 +379,23 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 
 ### 订阅页面
 
-- 需求链接：[H5 - 自动订阅](http://jira.ihuayue.cn/browse/DA-391?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
+- 需求链接：[H5 - 自动订阅](http://jira.ihuayue.cn/browse/DA-391)
 - 代码位置：`overseas/front/www_src/dreameVue/bundle`
 - vue项目
 
 ### 复充活动
 
-- 需求链接：[H5 - 复充活动](http://jira.ihuayue.cn/browse/DP-74?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
+- 需求链接：[H5 - 复充活动](http://jira.ihuayue.cn/browse/DP-74)
 - 代码位置：`overseas/front/www_src/dreame/app/tpls/doubleRecharge`
 - 普通H5
+
+
+### 成为作者落地页
+
+- 需求链接：[H5 - 成为作者的H5落地页](http://jira.ihuayue.cn/browse/DA-491)
+- 代码位置：`overseas/front/www_src/dreame/app/tpls/toBeAuthor`
+- 普通H5
+
 
 ### pc和wap站公用的邮箱登录模块
 
@@ -389,7 +403,7 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 > 构建的时候有一点点不同，有一个复制的操作，主要是pc站和wap站的静态文件目录不是同一个。
 > 代码都是同一套，只是在将html、js和css文件输出到wap站的静态目录之后再将文件复制到pc站的静态目录。具体可以查看代码目录下面的`package.json`文件中的命令。
 
-- 需求链接：[wap - 邮箱登录](http://jira.ihuayue.cn/browse/DA-447?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)、[WAP - 邮箱注册](http://jira.ihuayue.cn/browse/DA-443?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)、[wap - 忘记密码](http://jira.ihuayue.cn/browse/DA-451?filter=-1&jql=resolution%20in%20(Unresolved%2C%20Fixed)%20AND%20assignee%20in%20(currentUser())%20ORDER%20BY%20updatedDate%20DESC)
+- 需求链接：[wap - 邮箱登录](http://jira.ihuayue.cn/browse/DA-447)
 - 代码位置：`overseas/front/www_src/dreameVue/emailLogin`
 - vue项目
 
@@ -422,7 +436,7 @@ vue项目的话就直接看`vue.config.js`和`package.json`配置就能懂的吧
 
 ### 客户端会在webview中种的cookie值
 
-安卓和iOS保持一致
+安卓和iOS有点一致。iOS中没有种 `qid` 和 `osType`。iOS在v1.4版本中添加了。使用的时候要注意一下。
 
 ![](http://file.ficfun.com/group1/M00/01/CC/rB84XV1l5iiANuQbAABLPsFJCzc761.png)
 
