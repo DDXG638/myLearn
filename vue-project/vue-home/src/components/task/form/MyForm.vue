@@ -7,6 +7,7 @@
 <script>
     export default {
         name: "my-form",
+        componentName: 'my-form',
         // 注入 model数据 和 验证rule数据，方便后代组件处理
         provide() {
             return {

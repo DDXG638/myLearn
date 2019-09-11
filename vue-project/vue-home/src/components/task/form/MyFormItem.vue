@@ -11,12 +11,15 @@
 
 <script>
     import schema from 'async-validator';
+    import emitter from '@/mixins/emitter';
 
     export default {
         name: "my-form-item",
+        componentName: 'my-form-item',
         props: ['prop', 'label'],
         // 获取祖先组件注入的数据
         inject: ['model', 'rule'],
+        mixins: [emitter],
         data() {
             return {
                 validateStatus: '',
@@ -55,8 +58,10 @@
         mounted() {
             // 如果需要验证，就向 MyForm 发送添加验证的通知
             if (this.prop) {
-                // TODO this.$parent写太死了，如果又嵌套了一层，那所有逻辑都会出错
-                this.$parent.$emit('addFormItem', this);
+                // this.$parent写太死了，如果又嵌套了一层，那所有逻辑都会出错
+                // this.$parent.$emit('addFormItem', this);
+                // 改进
+                this.dispatch('my-form', 'addFormItem', [this]);
             }
         },
         created() {
