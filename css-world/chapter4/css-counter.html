@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css-counter的小应用</title>
+
+    <style>
+        .wrapper{
+            counter-reset: mySelect;
+        }
+
+        input:checked {
+            counter-increment: mySelect;
+        }
+
+        p::after {
+            content: counter(mySelect) '课程';
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <input type="checkbox">语文
+    <input type="checkbox">数学
+    <input type="checkbox">英语
+    <input type="checkbox">历史
+    <input type="checkbox">地理
+    <input type="checkbox">政治
+
+    <p>已经选择</p>
+</div>
+
+</body>
+</html>
