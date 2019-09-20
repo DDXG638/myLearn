@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 44.44px;">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit|chrome">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=Edge">
+    <!-- 预加载DNS -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <!--<link rel="icon" type="image/x-icon" href="//file.ficfun.com/group1/M00/00/90/rB84dlwI6jKAJhMWAAAEfrOXwMI259.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="//file.ficfun.com/group1/M00/00/90/rB84dlwI6jKAJhMWAAAEfrOXwMI259.ico">-->
+    <link rel="dns-prefetch" href="//www.dreame.com/"/>
+    <link rel="dns-prefetch" href="//file.ficfun.com/"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Your Discounts Package</title>
+    <script>!function(t,e){var n=720;function i(){var i=e.clientWidth/n*100;o(i);var a=parseFloat(t.getComputedStyle(e)["font-size"]);Math.abs(a-i)>.1&&o(i*i/a)}function o(t){e.style.fontSize=t+"px"}t.calcRem=function(e){n=e,i(),t.addEventListener("resize",i)}}(window,document.documentElement);</script>
+    <script>window.calcRem(750);</script>
+    <!-- <link inline href="./css/index.css" rel="stylesheet"> -->
+</head>
+<body>
+<section>
+    <div class="continer">
+        <div class="icon icon-head"></div>
+        <div class="charge-continer">
+            <div class="table-center">
+                <div class="time-Countdown">
+                    <div class="icon point">
+                        <div class="text">
+                            HOURS
+                        </div>
+                        <span class="hours">
+                            00
+                        </span>
+                    </div>
+                    <div class="icon point">
+                        <div class="text">
+                            MINS
+                        </div>
+                        <span class="minute">
+                            00
+                        </span>
+                    </div>
+                    <div class="icon">
+                        <div class="text">
+                            SECS
+                        </div>
+                        <span class="second">
+                            00
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+
+            </div>
+
+            <p class="content">
+                This is an one-time offer and thanks for your purchase. Go and find out more popular books!
+            </p>
+
+            <div class="charge-box">
+
+            </div>
+
+        </div>
+    </div>
+    <div class="continer table-center" style="margin-top: .14rem; margin-bottom: .14rem;">
+        <!--<img src="//file.ficfun.com/group1/M00/00/8E/rB84dlv30h2AL_8aAAAQD4fo6KE381.png" alt="" style="display: block;width: 2.28rem;">-->
+    </div>
+    <div class="continer rules">
+        <h2>
+            RULES:
+        </h2>
+
+        <div class="separate"></div>
+
+        <ul>
+            <li>
+                <span class="icon icon-star-red"></span>
+                <span>
+                    It is a limited-time offer for just once.
+                </span>
+            </li>
+            <li>
+                <span class="icon icon-star-green"></span>
+                <span>
+                    After you completes one purchase, this offer will no longer be available, so a better deal is recommended.
+                </span>
+            </li>
+            <li>
+                <span class="icon icon-star-blue"></span>
+                <span>
+                    Both coins and bonus can be used to unlock episodes. 1 Coin= 1Bonus.
+                </span>
+            </li>
+            <li>
+                <span class="icon icon-star-red"></span>
+                <span>
+                     The bonus will expire after 7 days.
+                </span>
+            </li>
+            <li>
+                <span class="icon icon-star-green"></span>
+                <span>
+                    If you have any inquiries, please go to [ME] page and click [Feedback]. You can also email us at: contact@dreame.com.
+                </span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <footer class="table-center">
+        <p>Dreame reserves the right of final decision and </p>
+        <p>interpretation in the case of any dispute.</p>
+    </footer>
+</section>
+
+<div class="loading">
+    <div class="loading-box">
+        <span class="icon icon-loading"></span>
+    </div>
+</div>
+
+<script type="text/html" id="charge-item">
+    {{if data}}
+    {{each data val key}}
+    <div class="charge-item {{if _STATUS == 0}}time-out{{/if}} {{if val.buyed == true}}checked{{/if}}" data-item="{{key}}">
+        <div class="charge-coin">
+            <div class="top-tip">
+                {{if val.couponPercent > 0}}
+                <div class="tip-icon offer-tip">
+                    +{{val.couponPercent}}%
+                </div>
+                {{/if}}
+                {{if val.bestTip && val.bestTip == 1}}
+                <div class="tip-icon best-tip">
+                    Best Offer
+                </div>
+                {{/if}}
+            </div>
+            <span class="m">
+            {{val.amount}} <span class="s">Coins</span>
+        </span>
+            {{if val.coupon}}
+            <span class="s label">
+            +{{val.coupon}} Bonus
+        </span>
+            {{/if}}
+        </div>
+
+        <div class="charge-amount s">
+            {{val.price}}
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+</script>
+
+<script type="text/javascript" src="../src/jslibs/template.js"></script>
+<!--<script type="text/javascript" src="//file.dreame.com/static/b9009947d9d8a89ee90f21da6a50655d/index.js"></script>-->
+<script inline src="../src/jslibs/zepto.new.min.js"></script>
+<!-- <script src="./js/index.js"></script> -->
+
+</body>
+</html>
