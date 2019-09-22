@@ -17,6 +17,9 @@ module.exports = {
         path: path.resolve(__dirname, 'dist/js'),
         filename: 'index.js'
     },
+    resolveLoader: {
+        modules: ['node_modules', './src/loader']
+    },
     module: {
         rules: [
             /*{
@@ -135,6 +138,15 @@ module.exports = {
                         // options: {
                         //     presets: ["@babel/preset-env"]
                         // }
+                    },
+                    {
+                        // 需要使用绝对路径
+                        // loader: path.resolve(__dirname, './src/loader/myLoader.js'),
+                        // 配置resolveLoader.modules之后就不用再写这么长的path路径了
+                        loader: 'myLoader',
+                        options: {
+                            name: '自定义loader3'
+                        }
                     }
                 ]
             }
