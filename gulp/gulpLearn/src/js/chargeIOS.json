@@ -1,0 +1,107 @@
+{
+  "310": [
+    {
+      "activityId": 2,
+      "amount": 300,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 30,
+      "couponPercent": 10,
+      "price": "$2.99",
+      "productId": "product_first_charge_a3",
+      "stronger": false
+    },
+    {
+      "activityId": 2,
+      "amount": 1000,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 200,
+      "couponPercent": 20,
+      "price": "$9.99",
+      "productId": "product_first_charge_a4",
+      "stronger": false
+    },
+    {
+      "activityId": 2,
+      "amount": 2000,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 1000,
+      "couponPercent": 50,
+      "price": "$19.99",
+      "productId": "product_first_charge_a6",
+      "stronger": false
+    }
+  ],
+  "502": [
+    {
+      "activityId": 2,
+      "amount": 200,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 20,
+      "couponPercent": 10,
+      "price": "$1.99",
+      "productId": "product_first_recharge_b6",
+      "stronger": false
+    },
+    {
+      "activityId": 2,
+      "amount": 500,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 100,
+      "couponPercent": 20,
+      "price": "$4.99",
+      "productId": "product_first_recharge_b7",
+      "stronger": false
+    },
+    {
+      "activityId": 2,
+      "amount": 1300,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 650,
+      "couponPercent": 50,
+      "price": "$12.99",
+      "productId": "product_first_recharge_b8",
+      "stronger": false
+    }
+  ],
+  "404": [
+    {
+      "activityId": 2,
+      "amount": 100,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 10,
+      "couponPercent": 10,
+      "price": "$0.99",
+      "productId": "product_first_recharge_c6",
+      "stronger": false
+    },
+    {
+      "activityId": 2,
+      "amount": 300,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 60,
+      "couponPercent": 20,
+      "price": "$2.99",
+      "productId": "product_first_recharge_c7",
+      "stronger": false
+    },
+    {
+      "activityId": 2,
+      "amount": 1000,
+      "buyed": false,
+      "countryCode": "",
+      "coupon": 500,
+      "couponPercent": 50,
+      "price": "$9.99",
+      "productId": "product_first_recharge_c8",
+      "stronger": false
+    }
+  ]
+}
