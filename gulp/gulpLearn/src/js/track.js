@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 
-/*import isIOS from 'hy-libs/isIOS';
-import sa from 'sa-sdk-javascript';
+const isIOS = function () {return /iPhone|iPod|iPad/i.test(navigator.userAgent);};
+/*import sa from 'sa-sdk-javascript';
 
 sa.init({
     name: 'sa',
@@ -13,11 +13,11 @@ const qid = Cookies.get('qid') || '',
     platform = isIOS() ? 'iOS' : 'Android';
 
 export function trackPageView(obj = {}) {
-    console.log('trackPageView', obj);
+    console.log('trackPageView', {...obj, qid, platform});
 }
 
 export function trackLogin() {
-    console.log('trackLogin');
+    console.log('trackLogin', {platform, qid});
 }
 
 /* exports.trackPageView = function(obj = {}) {

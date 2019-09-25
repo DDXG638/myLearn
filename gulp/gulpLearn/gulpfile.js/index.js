@@ -1,4 +1,5 @@
-const { series } = require('gulp');
+const { series, parallel } = require('gulp');
+const cache = require('gulp-cache');
 
 const buildJs =  require('./buildJs');
 const buildImg = require('./buildImg');
@@ -11,4 +12,10 @@ function build(cb) {
   cb();
 }
 
-exports.build = series(buildJs, buildImg, buildCss, buildHtml);
+function clearImgCache(cb) {
+  cache.clearAll();
+  cb();
+}
+
+exports.clearImgCache = clearImgCache;
+exports.build = series(parallel(buildJs, series(buildImg, buildCss)), buildHtml);
