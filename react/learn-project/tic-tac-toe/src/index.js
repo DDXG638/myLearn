@@ -18,7 +18,11 @@ import "./index.css";
 function Square(props) {
   return (
     /* 事件绑定必须使用函数，使用this.setState方法来修改state中的值 */
-    /* 这种事件绑定跟上面的事件绑定是一样的，对于有传参的方法就必须要用一个函数包着，不然就会立即执行。对于没有传参要求的方法，可以不用函数包着 */
+    /* 这种事件绑定跟上面的事件绑定是一样的，对于有传参的方法就必须要用一个函数包着，
+       不然就会立即执行。对于没有传参要求的方法，可以不用函数包着 
+       还需要注意事件绑定中的this的指向，有三种写法，
+       see：https://www.reactjscn.com/docs/handling-events.html
+    */
     <button className="square" onClick={props.onClick}>
       {/* 使用this.props获取传入组件的参数 */}
       {props.value}
@@ -96,7 +100,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board squares={current.squares} onClick={(i) => this.handlerClick(i)}/>
+          <Board squares={current.squares} onClick={this.handlerClick}/>
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
@@ -106,7 +110,8 @@ class Game extends React.Component {
     );
   }
 
-  handlerClick(i) {
+  handlerClick = (i) => {
+    console.log('handlerClick', i, this);
     // 浅拷贝state.squares数据用于存储修改后的数据
     const historys = this.state.historys.slice(0, this.state.historyStep + 1);
     // 最新的squares在数组的最后面
@@ -115,11 +120,27 @@ class Game extends React.Component {
     console.log(i);
     squares[i] = this.state.isNextX ? 'X' : 'O';
     // 只能是用这种方式修改state中的数据
-    this.setState({
+    // 需要注意的是this.setState是异步执行的，this.props 和 this.state 的更新也可能是异步更新的。
+    // 所以你不应该依靠它们的值来计算下一个状态
+    /* this.setState({
       historys: historys.concat([{squares}]),
       isNextX: !this.state.isNextX,
       historyStep: historys.length
+    }); */
+
+    console.log('beforeHistoryLength', this.state.historys.length);
+
+    // 上面的代码最好替换成下面的形式
+    this.setState((prevState, props) => ({
+      historys: historys.concat([{squares}]),
+      isNextX: !prevState.isNextX,
+      historyStep: historys.length
+    }), () => {
+      console.log('afterHistoryLength', this.state.historys.length);
     });
+
+    // 因为this.setState方法是异步的的，所以下面的输出是没有变化的，可以在this.setState方法中添加一个回调函数来解决
+    // console.log('afterHistoryLength', this.state.historys.length);
 
     let winner = checkWin(i, squares);
 
