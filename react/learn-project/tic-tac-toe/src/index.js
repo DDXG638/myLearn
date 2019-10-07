@@ -2,6 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
+import AntdFormTest from './components/AntdFormTest';
+import MyFormTest from "./components/MyFormTest";
+
 // class Square extends React.Component {
 //   render() {
 //     return (
@@ -207,4 +210,10 @@ function checkWin(index, squares) {
 
 // ========================================
 
-ReactDOM.render(<Game />, document.getElementById("root"));
+// ReactDOM.render(<Game />, document.getElementById("root"));
+
+// 渲染antd的组件
+// ReactDOM.render(<AntdFormTest/>, document.getElementById("root"));
+
+// 渲染自己封装的组件
+ReactDOM.render(<MyFormTest/>, document.getElementById("root"));
