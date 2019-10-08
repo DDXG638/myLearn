@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Icon } from 'antd';
 
 // 创建一个form表单的高阶组件，类似于antd中的Form.create，接受一个Form组件
 // 包装用户的表单，增强数据管理能力和表单校验等功能，
@@ -17,6 +18,7 @@ function MyFormCreate(Comp) {
 
         // 处理输入框的change事件
         handleChange = event => {
+            console.log('onChange');
             // 设置新的value值
             const {name, value} = event.target;
             this.setState({
@@ -25,6 +27,15 @@ function MyFormCreate(Comp) {
                 // 数据修改后的回调
                 // 马上校验表单正确性
                 this.validateField(name);
+            });
+        }
+
+        // 处理输入框的focus事件
+        handleFocus = event => {
+            console.log('onFocus');
+            const field = event.target.name;
+            this.setState({
+                [field + 'Focus']: true
             });
         }
 
@@ -69,6 +80,12 @@ function MyFormCreate(Comp) {
             // 回调
             cb(results);
         }
+
+        // 拓展方法，获取错误信息
+        getFieldError = field => this.state[field + 'Message']
+
+        // 拓展方法，用户是否点击了输入框，初始值可能是undefined
+        isFieldTouched = field => !!this.state[field + 'Focus']
     
         /**
          * 提供给表单使用的装饰器，高阶组件，输入一个 表单控件
@@ -88,13 +105,14 @@ function MyFormCreate(Comp) {
                                 name: fieldName, 
                                 value: this.state[fieldName] || '', // 输入框的值
                                 onChange: this.handleChange, // 在inputComp中绑定change事件
+                                onFocus: this.handleFocus
                             }
                         )
                     }
                     {/* 显示校验信息 */}
-                    {
+                    {/*
                         this.state[fieldName + 'Message'] && <p style={{color: 'red'}}>{this.state[fieldName + 'Message']}</p>
-                    }
+                    */}
                 </div>
             )
         }
@@ -102,17 +120,37 @@ function MyFormCreate(Comp) {
         render() {
             return (
                 /* 拓展了getFieldDecorator方法 、validateForm方法 */
-                <Comp {...this.props} getFieldDecorator={this.getFieldDecorator} value={this.state} validateForm={this.validateForm}/>
+                <Comp {...this.props} 
+                getFieldDecorator={this.getFieldDecorator} 
+                value={this.state} 
+                validateForm={this.validateForm}
+                getFieldError={this.getFieldError}
+                isFieldTouched={this.isFieldTouched}/>
             )
         }
     }
 }
 
-// FormItem组件
+// FormItem组件，用于显示错误信息等其他操作
 class FormItem extends Component {
     render() {
         return (
-            <p>kdkdk</p>
+            <div className="formItem">
+                {this.props.children}
+                {this.props.validateStatus === 'error' && <p style={{color: 'red'}}>{this.props.help}</p>}
+            </div>
+        );
+    }
+}
+
+class MyInput extends Component {
+    render () {
+        return (
+            <div>
+                {this.props.prefix}
+                {/* ...this.props会将React.cloneElement这个方法中添加的输入框属性全部添加到下面的input标签中 */}
+                <input {...this.props}/>
+            </div>
         );
     }
 }
@@ -135,30 +173,37 @@ class MyFormTest extends Component {
 
     render() {
 
-        const {getFieldDecorator} = this.props;
+        const {getFieldDecorator, getFieldError, isFieldTouched} = this.props;
+        const usernameError = isFieldTouched('username') && getFieldError('username');
+        const passwordError = isFieldTouched('password') && getFieldError('password');
 
         return (
             <div>
                 {/* <input type="text" /> */}
+                <FormItem validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
                 {
                     getFieldDecorator(
                         'username', 
                         {
                             rules: [{require: true, message: '请输入用户名！'}]
                         }, 
-                        <input type="text" />
+                        <MyInput type="text" prefix={<Icon type="user"/>}/>
                     )
                 }
+                </FormItem>
 
+                <FormItem validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
                 {
                     getFieldDecorator(
                         'password', 
                         {
                             rules: [{require: true, message: '请输入密码！'}]
                         }, 
-                        <input type="password" />
+                        <MyInput type="password"  prefix={<Icon type="lock"/>}/>
                     )
                 }
+                </FormItem>
+                
                 
                 <button onClick={this.handleSubmit}>OK</button>
             </div>
