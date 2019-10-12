@@ -7,7 +7,7 @@
 <body>
 	
 	<script>
-		var arr = [5,4,6,8,3,15,21,32,15,3,'5',6,5,6];
+		var arr = [5,4,6,8,3,15,21,32,15,3,'5',6,5,6,false,false,true,null,null,undefined];
 		function quchong(arr){
 			var result = [];
 			for(var i=0;i<arr.length;i++){
@@ -24,6 +24,9 @@
 			}
 			return result;
 		}
+		/* 
+		这种方法有点小问题，[5,'5']这两个元素其实是不一样的，是没有重复的，使用对象key唯一的方式去重会忽略数字和字符串，导致去重成：[5]
+		*/
 		function quchong2(arr){//使用hash表去重,用数据作为键
 			var result = [];
 			var hash = {};
@@ -35,7 +38,10 @@
 			}
 			return result;
 		}
-		function quchong3(arr){//改进hash表去重方法，对象对属性索引时会进行强制类型转换，arr[‘1’]和arr[1]得到的都是arr[1]的值
+
+		// 改进hash表去重方法，对象对属性索引时会进行强制类型转换，arr[‘1’]和arr[1]得到的都是arr[1]的值
+		// hash中的值存储的是数据的类型，不再是布尔值了
+		function quchong3(arr){
 			var result = [];
 			var hash = {};
 			for(var i=0;i<arr.length;i++){
@@ -46,13 +52,16 @@
 					hash[arr[i]].push(t);
 				}
 			}
+			console.log(hash);
 			return result;
 		}
+
+		// 
 		function quchong4(arr){
 			arr.sort(function(a,b){
 				return a-b;
 			});
-			//console.log(arr);
+			console.log(arr);
 			var result = [arr[0]];
 			for(var i=0;i<arr.length;i++){
 				arr[i] != result[result.length-1] && result.push(arr[i]);
@@ -60,8 +69,15 @@
 			return result;
 		}
 
+		// 使用set去重
+		function quchong5(arr){
+			return [...(new Set(arr))];
+		}
+
 		var bb = quchong4(arr);
 		console.log(bb);
+
+		console.log('set去重', quchong5(arr));
 	</script>
 </body>
 </html>
