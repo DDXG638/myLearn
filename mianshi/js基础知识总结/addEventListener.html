@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>addEventListener</title>
+
+    <style>
+
+        #wrap1 {
+            width: 300px;
+            height: 300px;
+            background: black;
+        }
+
+        #wrap2 {
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+
+        #wrap3 {
+            width: 100px;
+            height: 100px;
+            background: yellow;
+        }
+
+        #wrap4 {
+            width: 50px;
+            height: 50px;
+            background: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap1">wrap1
+        <div id="wrap2">wrap2
+            <div id="wrap3">wrap3
+                <div id="wrap4">wrap4</div>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        事件响应顺序问题跟addEventListener的第三个参数useCapture有关，useCapture默认为false（冒泡），true（捕获）
+    </p>
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener">addEventListener</a><br>
+
+    <p>
+        事件流请查看：<a href="https://www.w3.org/TR/DOM-Level-3-Events/#event-flow">event-flow</a>，
+        他是按照1>2>3的顺序执行的，可以使用stopPropagation()阻止
+    </p>
+
+    <script>
+        var wrap1 = document.getElementById("wrap1");
+        var wrap2 = document.getElementById("wrap2");
+        var wrap3 = document.getElementById("wrap3");
+        wrap1.addEventListener("click", function (e) {
+            console.log(1)
+            e.stopPropagation()
+        }, true)
+        wrap2.addEventListener("click", function (e) {
+            console.log(2)
+        }, true)
+        wrap3.addEventListener("click", function (e) {
+            console.log(3)
+        }, true)
+        wrap4.addEventListener("click", function (e) {
+            // e.stopPropagation()
+            console.log(4)
+        }, true)
+    </script>
+</body>
+
+</html>

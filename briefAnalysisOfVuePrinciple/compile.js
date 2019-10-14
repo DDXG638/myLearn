@@ -9,7 +9,7 @@ class Compile {
     if (this.$el) {
       // 将dom节点转换为Fragment提高执行效率
       this.$fragment = this.node2Fragment(this.$el);
-      // 执行编译
+      // 执行编译，模板解析
       this.compile(this.$fragment);
       // 将生成的结果追加至宿主元素
       this.$el.appendChild(this.$fragment);
@@ -19,9 +19,10 @@ class Compile {
     // 创建一个新的Fragment
     const fragment = document.createDocumentFragment();
     let child;
-    // 将原生节点拷贝至fragment
+    // 将原生节点移动至fragment
     while ((child = el.firstChild)) {
-      // appendChild是移动操作
+      // appendChild是移动操作，他会移动el.firstChild元素，类似剪切一样。
+      // 所以经过这个操作之后，el中的元素就全部被移动走了，变成空元素
       fragment.appendChild(child);
     }
     return fragment;
@@ -86,7 +87,7 @@ class Compile {
   }
 
   isTextNode(node) {
-    return node.nodeType == 3; //元素节点
+    return node.nodeType == 3; //文本节点
   }
 
   isDirective(attr) {
@@ -111,7 +112,6 @@ class Compile {
   model(node, vm, exp) {
     this.update(node, vm, exp, "model");
 
-    let val = vm.exp;
     // 双绑还要处理视图对模型的更新
     node.addEventListener("input", e => {
       vm[exp] = e.target.value;

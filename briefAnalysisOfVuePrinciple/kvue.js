@@ -9,7 +9,7 @@ class KVue {
         this.$compile = new Compile(options.el, this);
     }
 
-
+    // 监听属性变化
     observe(value){
         // 递归的终止条件
         if (!value || typeof value !== 'object' ) {
@@ -28,7 +28,7 @@ class KVue {
     defineReactive(obj, key, val) {
         this.observe(val); // 递归查找嵌套属性
 
-        // 创建Dep依赖管理器，每一个数据对应一个Dep，Dep中存放着至少一个Watcher（更新执行者）
+        // 创建Dep依赖管理器，每一个数据对应一个Dep，Dep中可存放多个Watcher（更新执行者）
         const dep = new Dep();
         console.log(key + '---defineReactive');
 
