@@ -127,7 +127,7 @@
 			var responseCallback;
 
 			// 如果app返回的数据有responseId说明app已经处理好了这个事件
-			// 可能是通过callHandler方法的事件 也可能是 registerHandler方法的注册事件
+			// 处理通过callHandler方法的传递的消息回调
 			if (message.responseId) {
 				responseCallback = responseCallbacks[message.responseId];
 				if (!responseCallback) {
@@ -138,6 +138,7 @@
 				// 执行完后删除回调队列中的方法
 				delete responseCallbacks[message.responseId];
 			} else {
+				//  处理通过registerHandler方法的注册事件
 				if (message.callbackId) {
 					var callbackResponseId = message.callbackId;
 					responseCallback = function(responseData) {
@@ -160,7 +161,7 @@
         _dispatchMessageFromObjC(messageJSON);
 	}
 
-	// 创建iframe，这个才是与app底层
+	// 创建iframe，这个才是与app通信的操作
 	messagingIframe = document.createElement('iframe');
 	messagingIframe.style.display = 'none';
 	messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;

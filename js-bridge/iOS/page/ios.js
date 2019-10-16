@@ -26,6 +26,7 @@ function _run(callback) {
         if (window[MESSAGE_QUEUE_NAME]) {
             window[MESSAGE_QUEUE_NAME].push(_callback);
         } else {
+            // 在window.WebViewJavascriptBridge没有挂载之前将调用了的js-bridge方法暂时存储到一个队列中
             window[MESSAGE_QUEUE_NAME] = [_callback];
             /**
              * 这个iframe的作用是 加载并执行 保存在app端的WebViewJavascriptBridge_JS.js文件中的代码
@@ -46,8 +47,14 @@ function _run(callback) {
  * @private
  */
 function _call() {
+    /**
+     * cmd：web端与app端定好的实现功能的名字，如：cmd=login，web端调用之后app就会处理登陆逻辑
+     * params：web端传给app端的参数
+     * callback：这个方法回来之后web端要执行的逻辑
+     */
     let [cmd, params, callback] = parseCallArguments(arguments);
 
+    // 这个bridge就是window.WebViewJavascriptBridge，这里使用里面的callHandler方法
     _run(bridge => {
         bridge.callHandler(cmd, ...params, callback);
     });
