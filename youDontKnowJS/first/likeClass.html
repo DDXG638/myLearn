@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>面向对象的设计模式</p>
+    <div class="" id="wrapper"></div>
+
+    <script src="../../effective-front-end/html5-touch/libs/zepto.new.min.js"></script>
+
+
+    <script>
+        function Weight (width, height) {
+            this.width = width || 50
+            this.height = height || 50
+            this.$el = null
+        }
+
+        Weight.prototype.render = function($to) {
+            if (this.$el) {
+                this.$el.css({
+                    width: `${this.width}px`,
+                    height: `${this.height}px`
+                }).appendTo($to)
+            }
+        }
+
+        // 子类
+        function Button(width, height, label) {
+            /*
+            调用super构造函数
+            */
+            Weight.call(this, width, height)
+            this.label = label || '按钮'
+
+            this.$el = $('<button>').text(this.label)
+        }
+
+        /*
+        Button继承Weight
+        */
+        Button.prototype = Object.create(Weight.prototype)
+
+        // 重写render方法
+        Button.prototype.render = function ($to) {
+            /*
+            先执行父类的render方法
+            */
+            Weight.prototype.render.call(this, $to)
+
+            // 添加按钮点击绑定
+            this.$el.click(this.onclick.bind(this))
+        }
+
+        Button.prototype.onclick = function() {
+            console.log(`Button ${this.label} clicked!`)
+        }
+
+        $(document).ready(function(){
+            var b1 = new Button(100, 30, '点我啊！')
+            b1.render($('#wrapper'))
+
+            var b2 = new Button(100, 30, '快点点我啊！')
+            b2.render($('#wrapper'))
+        })
+    </script>
+</body>
+</html>
