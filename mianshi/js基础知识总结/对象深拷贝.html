@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象深拷贝</title>
+</head>
+<body>
+    
+    <script>
+        function cloneDeep(arg) {
+            // 如果是数组，就要循环处理每一个元素
+            if (Array.isArray(arg)) {
+                return arg.map(item => cloneDeep(item))
+            } 
+            else if (Object.prototype.toString.call(arg) === '[object Object]') {
+                // 如果是对象，遍历对象，对所有值进行cloneDeep操作
+                var obj = {}
+                Object.keys(arg).forEach(key => obj[key] = cloneDeep(arg[key]))
+
+                return obj
+            }
+            else {
+                // 其他类型
+                return arg
+            }
+        }    
+    </script>
+</body>
+</html>

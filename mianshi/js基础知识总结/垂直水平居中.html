@@ -20,9 +20,12 @@
 		left:50%;
 		margin-top: -100px;
 		margin-left: -100px;
+		/* transform: translate(-50%, -50%); */
 	}
 </style>
 <body>
+	<p>固定宽高：position + margin-left margin-top</p>
+	<p>不需固定宽高：position + transform: translate(-50%, -50%)，ie9以下不支持 transform</p>
 	<div class="box">
 		<div class="content">
 		</div>

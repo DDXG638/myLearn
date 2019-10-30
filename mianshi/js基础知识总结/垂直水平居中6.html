@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>垂直水平居中6</title>
+</head>
+<style type="text/css">
+	.box{
+        width: 500px;
+		height:500px;
+		text-align: center;
+		border:1px solid black;
+	}
+
+    .content {
+		top: 50%;
+		left: 50%;
+		vertical-align: middle;
+		display: inline-block;
+		border:1px solid red;
+    }
+
+	.content-none{
+		display: inline-block;
+		height: 100%;
+		width: 0;
+		vertical-align: middle;
+	}
+</style>
+<body>
+	<p>不需固定宽高，无兼容问题，需要增加一个标签</p>
+	<p>增加一个与居中元素同级的元素content-none，设置高度为100%，宽度为0。主要是利用inline-block水平排列的时候使用vertical-align: middle可以垂直居中排列的特性。</p>
+	<div class="box">
+		<div class="content">
+				vertical-align: middle;
+				display: inline-block;
+		</div>
+
+		<div class="content-none"></div>
+	</div>	
+</body>
+</html>

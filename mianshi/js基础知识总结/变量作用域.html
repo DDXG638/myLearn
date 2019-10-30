@@ -3,9 +3,32 @@
 <head>
 	<meta charset="UTF-8">
 	<title>变量作用域</title>
+	<style>
+	.box{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		/* align-items: center; */
+	}
+
+	.outer {
+		width: 200px;
+		height: 100px;
+	}
+	.inner {
+		width: 60px;
+		height: 60px;
+		padding-top: 20%;
+	}
+	</style>
 </head>
 <body>
-	<script>
+	<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAyVBMVEUAAAAAAAD////09PTr6+v///8RERHl5eXc3Nz4+PghISFeXl4zMzPY2NjS0tLQ0NDQ0NCPj4/f39/+/v7Ozs6BgYF1dXXT09POzs7T09Ourq6+vr6jo6NDQ0PQ0ND9/f3Hx8ednZ1TU1NERERqamrV1dXe3t729vbs7Ozn5+ezs7NPT0/Ozs7b29v7+/vy8vLq6urd3d3a2trW1taRkZFeXl4yMjIhISHw8PDl5eXj4+Ph4eHT09PLy8vBwcGkpKSJiYltbW3////KrXccAAAAQnRSTlM4ADg4OAM4NzYGODg4MiweGDgM+Tg4OC4mFHY4ODgp9Y5rSkY4MA/gyb44OCQO7tfCq6egZE5BPtG3trCdlIdwX1Qno285AAACCklEQVQ4y32VZ5uqMBCF2RMiQapYEBV7XXXb3XJ7mf//o25Ed0mC7PkiOXmfcZgME+vG0DHqp4FYhYeYGzs6mo1tlAoiXoceAwBOq+fl/t7rDgGwElZRNwXsrm99qOFJ2omraOKAdRuWrrwD9E00Zhg2raqWQMo1NANG1lXlNgIVTRi6Vo2aNsYl6jpqTFM+EH2gITra5vzvQl16gHtBE0B5o9fHOyK6myrsCOEFXaFV2v821L5/2BBtlXSBpEDXYEo9t/R1Ln8GbVLitpAWaF8N+ocm5zy/0L0Wlp9QB8pp/qQf54cZta1SHWQSTWAr3o5+nR+eNbSHUKKRVtPXxZt1SWCj1daR6OHqQT236beybIBJdIxllZxN6EEzGLglq7qvkm36pjekQGLdBMhN8mVCj4bVOaEhPBP9TlvTsuFa8gR6pj+hmWkBRbFahr0gmptNC1uiGTqG/zYYNAzLw0qinJUtWKtbRKceCM1kX3Y7MwEG94TGZgZPRE/m/4uiCbljlGtKNNVRB3GByrCOvjMY6OsexPtnKPR6mWoyZO/oGvDqyYZAWo6MCPA/KZTgJSo7ke1rYg5hu9p4C4He1TwF7KMxNA/A0K+E7DIItzKKMwaMfA1c2kDIrwx43gcgWnmzwPzlLYBgXXNtuJdbw3ZQKIj1a0PXuh8UHBNp7NZcRlp0l1fNKlqv//z+I/F6x1V0AAAAAElFTkSuQmCC" 
+	alt="javascript:alert(1)" onerror="" onclick="javascript:alert(4)">
+
+	<input id="input1" type="text">
+	<div id="text"></div>
+	<!-- <script>
 		var a = 10;
 		function test(){
 		    a = 100;
@@ -23,6 +46,23 @@
 		bb.forEach(function(val){
 			console.log(val);
 		});
+	</script> -->
+
+	<div class="box">
+
+		<p>123456</p>
+		<p>123456</p>
+		<p>123456</p>
+	</div>
+
+	<div class="outer"><div class="inner"></div></div>
+
+	<script src="1.js"></script>
+
+	<script>
+	input1.addEventListener('input', function(e){
+		text.innerText = e.target.value
+	})
 	</script>
 </body>
 </html>
