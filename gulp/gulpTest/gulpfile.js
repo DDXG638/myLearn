@@ -21,7 +21,7 @@ gulp.task('build', function(done) {
         .bundle()
         .pipe(source('index.js'))
         .pipe(buffer())
-        .pipe(uglify())
+        /* .pipe(uglify()) */
         .pipe(gulp.dest('dist/'));
 
     done();
