@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>节流函数</title>
+    <style>
+        html,body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        #scroll-box {
+            height: 100%;
+            overflow: auto;
+        }
+
+        .box {
+            margin-top: 20px;
+            height: 400px;
+            border: 1px solid;
+            background: chartreuse;
+        }
+    </style>
+</head>
+<body>
+    <div id="scroll-box">
+        <p>节流函数主要用于向滚动监听的事件中，在事件不断触发过程中，每隔指定的时间必定触发一次</p>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+
+    <script>
+        (function(){
+            let scrollBox = document.getElementById('scroll-box')
+            scrollBox.addEventListener('scroll', throttle2(function(){
+                console.log('触发', this)
+            }, 1000))
+
+            /**
+             * 需要记录上一次触发cb的时间，每次都要比较当前时间与上次触发时间的差值是否大于wait时间
+             * */
+            function throttle(cb, wait) {
+                wait = wait || 100
+                let lastTime = 0;
+
+                return function () {
+                    let now = new Date().getTime();
+                    if (now - lastTime > wait) {
+                        lastTime = now
+                        cb.apply(this, arguments)
+                    }
+                }
+            }
+
+            function throttle2(cb, wait) {
+                wait = wait || 100
+                let timer = null
+
+                return function() {
+                    if (!timer) {
+                        timer = setTimeout(function() {
+                            timer = null
+                        }, wait)
+
+                        cb.apply(this, arguments)
+                    } 
+                }
+
+            }
+        })()
+        
+    </script>
+</body>
+</html>

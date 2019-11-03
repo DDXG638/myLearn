@@ -16,9 +16,9 @@
 		 
 		var stoleSecretIdentity = hero.getSecretIdentity;
 		 
-		console.log(stoleSecretIdentity());
-		console.log(stoleSecretIdentity.call(hero));
-		console.log(hero.getSecretIdentity());
+		console.log(stoleSecretIdentity()); // undefined
+		console.log(stoleSecretIdentity.call(hero)); // John Doe
+		console.log(hero.getSecretIdentity()); // John Doe
 	</script>
 </body>
 </html>

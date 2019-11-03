@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>input中disabled与readonly的区别</p>
+
+
+    <p>disabled:</p>
+    <ul>
+        <li>对于所有的表单元素都有效</li>
+        <li>用户不可输入、点选、拖动输入框，样式变灰</li>
+        <li>js可控（还可使用input.value设置值和获取值）</li>
+        <li>表单提交不传递对应的数据</li>
+    </ul>
+    
+
+
+    <p>Readonly</p>
+    <ul>
+        <li>只针对input(text / password)和textarea这类文本型的表单有效</li>
+        <li>用户不可输入、拖动输入框</li>
+        <li>js可控（还可使用input.value设置值和获取值）</li>
+        <li>表单提交会传递对应的数据</li>
+    </ul>
+
+    <input type="text" id="input" readonly value='777'>
+    <!-- <input type="text" id="input" disabled> -->
+
+    <script>
+        let $input = document.getElementById('input')
+    </script>
+</body>
+</html>

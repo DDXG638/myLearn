@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>防抖函数</title>
+</head>
+<body>
+    <p>防抖函数主要用于输入框事件中，只在乎事件停止之后的操作，不在乎事件正在触发时的处理。就是输入停止之后再触发事件方法</p>
+    
+    <input type="text" id="input">
+
+    <script>
+        (function(){
+            let $input = document.getElementById('input')
+            $input.addEventListener('input', debouce2(function() {
+                console.log('内容', input.value, this)
+            }, 500))
+
+            /**
+             * 事件最后一次触发wait时间之后进行处理
+             * */
+            function debouce(cb, wait) {
+                wait = wait || 100
+                let timer = 0
+
+                return function () {
+                    if (timer) {
+                        // 如果存在timer，就清除定时器，然后更新定时器
+                        // 在连续触发事件阶段将会一直执行上面的操作
+                        clearTimeout(timer)
+                    }
+
+                    timer = setTimeout(() => {
+                        cb.apply(this, arguments)
+                        timer = 0
+                    }, wait)
+                    
+                }
+            }
+
+            function _now () {return new Date().getTime()}
+
+            /**
+             * 方法一可以实现功能，但是会频繁的清除和设置定时器，消耗性能
+             * */
+            function debouce2(fn, wait) {
+                
+                let timer = 0
+                let _this
+                let _arguments
+                let lastTime
+
+
+                function delay () {
+                    let now = _now()
+
+                    // 符合条件
+                    if (now - lastTime >= wait) {
+                        timer = 0
+                        fn.apply(_this, _arguments)
+                    } else {
+                        // 如果不符合条件就继续setTimeout剩下的时间
+                        // 因为这个delay方法是在setTimeout执行的，所以直接使用timer=xxx重新赋值就行
+                        timer = setTimeout(delay, lastTime + wait - now)
+                    }
+                }
+
+                return function () {
+                    _this = this
+                    _arguments = arguments
+                    lastTime = _now() // 每次触发事件都会更行lastTime
+
+                    // 如果不存在timer，就创建一个定时器，在wait之后执行delay函数，剩下的操作就交给delay函数了
+                    if (!timer) {
+                        timer = setTimeout(delay, wait)
+                    }
+                }
+            };
+
+        })()
+        
+    </script>
+</body>
+</html>

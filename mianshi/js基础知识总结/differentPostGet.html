@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>POST请求与GET请求的区别</p>
+
+    <ul>
+        <li>GET在浏览器回退时是无害的，而POST会再次提交请求</li>
+        <li>GET请求会被浏览器主动cache，而POST不会，除非手动设置</li>
+        <li>GET请求只能进行url编码，而POST支持多种编码方式</li>
+        <li>GET请求参数会被完整保留在浏览器历史记录里，而POST中的参数不会被保留</li>
+        <li>GET请求在URL中传送的参数是有长度限制的，而POST么有</li>
+        <li>对参数的数据类型，GET只接受ASCII字符，而POST没有限制</li>
+        <li>GET参数通过URL传递，POST放在Request body中</li>
+        <li>GET产生一个TCP数据包；POST产生两个TCP数据包</li>
+        <li>post请求必须设置Content-Type值为application/x-form-www-urlencoded</li>
+        <li></li>
+    </ul>
+</body>
+</html>

@@ -38,9 +38,18 @@
             ]
         ]
 
-        function flatten() {
-
+        function flatten(arr) {
+            return arr.reduce((acc, cur) => {
+                // 递归的方式，遇到数组就继续使用函数扁平化
+                if (Object.prototype.toString.call(cur) === '[object Array]') {
+                    return acc.concat(flatten(cur))
+                } else {
+                    return acc.concat(cur)
+                }
+            }, [])
         }
+
+        console.log(flatten(arr))
     </script>
 </body>
 </html>

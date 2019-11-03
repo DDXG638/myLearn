@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>清理浮动</title>
+    <style>
+        .box {
+            width: 300px;
+            border: 1px solid;
+        }
+        .float-box {
+            /* 方法一 */
+            /* overflow: hidden; */
+        }
+
+        /* 方法三 */
+        .clearfix::after {
+            content: '';
+            display: block;
+            height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+        .clearfix {
+            /* 兼容IE */
+            *zoom: 1;
+        }
+
+        .sub {
+            width: 100px;
+            height: 50px;
+            border: 1px solid red;
+        }
+        .pull-left {float: left;}
+        .pull-right {float: right;}
+    </style>
+</head>
+<body>
+    
+    <p>清理浮动的方法:</p>
+    <p>1、浮动元素的外层元素添加overflow: hidden;</p>
+    <p>2、浮动元素下方添加clear: both;</p>
+    <p>3、使用:after来实现方法二</p>
+
+    <div class="box">
+        <div class="float-box clearfix">
+            <div class="pull-left sub">left</div>
+            <div class="pull-right sub">right</div>
+            <!-- 方法二 -->
+            <!-- <div style="clear: both;"></div> -->
+        </div>
+        
+        <p>浮动元素下面的文字</p>
+    </div>
+
+</body>
+</html>
