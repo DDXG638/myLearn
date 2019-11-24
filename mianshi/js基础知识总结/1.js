@@ -67,13 +67,39 @@ var oo = new String('A')
 
 showCase(oo) */
 
-function rr(v,p,offest,string) {
+/* function rr(v,p,offest,string) {
     console.log('v', v, 'p', p,'offest',offest,'string',string)
     return parseInt(v)
 }
 
-console.log('1 2 3'.replace(/(\d)/g, rr))
+console.log('1 2 3'.replace(/(\d)/g, rr)) */
 
+
+class A {
+    constructor() {
+        this.x = 1;
+    }
+}
+
+class B extends A {
+    constructor() {
+        super();
+        // this.x = 2;
+        // super.x = 3;
+        super.y = 4;
+    }
+
+    print() {
+        console.log(super.x);  // undefined
+        console.log(this.x);   // 3
+        console.log(super.y);   // 
+        console.log(this.y);   // 
+    }
+}
+
+let b = new B();
+console.log(b)
+b.print();
 
 /* var obj = {a: 111}
 

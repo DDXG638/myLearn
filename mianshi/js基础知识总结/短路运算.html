@@ -7,12 +7,12 @@
 <body>
 	
 	<script>
-		console.log("0 || 1 = "+(0 || 1));
-		console.log("1 || 2 = "+(1 || 2));
-		console.log("0 && 1 = "+(0 && 1));
-		console.log("1 && 2 = "+(1 && 2));
-		console.log(false == '0')
-		console.log(false === '0')
+		console.log("0 || 1 = "+(0 || 1)); // 1
+		console.log("1 || 2 = "+(1 || 2)); // 1
+		console.log("0 && 1 = "+(0 && 1)); // 0
+		console.log("1 && 2 = "+(1 && 2)); // 2
+		console.log(false == '0') // true
+		console.log(false === '0') // false
 
 		var a={},
 			b={key:'b'},
@@ -20,13 +20,13 @@
 		a[b]=123;
 		a[c]=456;
  		
-		console.log(a[b]);
-		console.log(a[c]);
-		console.log(a);
+		console.log(a[b]); // 456
+		console.log(a[c]); // 456
+		console.log(a); // {'[object Object]':456}
 		console.log(b);
 		console.log(c);
 		for(let aa in a){
-			console.log(aa);
+			console.log(aa); // '[object Object]'
 		}
 		/*
 			对象的键只能是string类型，当传入对象做键时，对象会调用toString()方法，而对象toString()的结构都是[object Object],即：
