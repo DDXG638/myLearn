@@ -7,43 +7,11 @@
 <body>
     <div class="wrapper">
         <button id="btn-connection">连接ws</button>
-        <button id="btn-send">发送消息</button>
+        <button id="btn-send">/user/getUserInfo</button>
+        <button id="btn-all">get all</button>
+        <button id="btn-response">getResponseCallbacks</button>
     </div>
 
     <script src="./dist/js/pageIndex.js"></script>
-    <!--<script>
-        const $btnConnection = document.querySelector('#btn-connection')
-        const $btnSend = document.querySelector('#btn-send')
-        let ws
-
-        $btnConnection.addEventListener('click', function () {
-            if (ws) {
-                ws.onerror = ws.onopen = ws.onclose = null;
-                ws.close();
-            }
-
-            ws = new WebSocket(`ws://${location.host}/chat`);
-            ws.onerror = function() {
-                console.log('-&#45;&#45;WebSocket 连接失败-&#45;&#45;');
-            };
-            ws.onopen = function() {
-                console.log('-&#45;&#45;WebSocket 连接成功-&#45;&#45;', ws.url);
-            };
-            ws.onclose = function() {
-                console.log('-&#45;&#45;WebSocket 连接关闭-&#45;&#45;');
-                ws = null;
-            };
-            ws.addEventListener('message', function (res) {
-                console.log('-&#45;&#45;获取到服务端的推送 -&#45;&#45;', res);
-                console.log('-&#45;&#45;获取到服务端的推送 -&#45;&#45;', JSON.parse(res.data));
-            });
-        })
-
-        $btnSend.addEventListener('click', function () {
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(['我吻过你的脸','你双手蹭在我的双肩'])
-            }
-        })
-    </script>-->
 </body>
 </html>
