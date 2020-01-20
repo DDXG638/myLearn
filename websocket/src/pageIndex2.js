@@ -11,12 +11,17 @@ $btnConnection.addEventListener('click', function () {
     myWs = new MyWebsocket()
     myWs.on('onopen', function () {
         console.log('---外：websocket链接成功---')
-        // myWs.send('/user/getUserInfo', {userId: 123456}, function (data) {
-        //     console.log('/user/getUserInfo', data)
-        // })
+    })
+    myWs.on('onpush', function (data) {
+        console.log('---外：服务端主动推送---', data)
+    })
+    myWs.on('onerror', function () {
+        console.log('---外：WebSocket 连接失败---')
+    })
+    myWs.on('onclose', function () {
+        console.log('---外：WebSocket 连接关闭---')
     })
     myWs.conection(`ws://${location.host}/chat`)
-    myWs.go()
 })
 
 $btnSend.addEventListener('click', function () {

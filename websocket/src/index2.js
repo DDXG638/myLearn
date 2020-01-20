@@ -4,11 +4,15 @@ class MyWebsocket {
     constructor (option) {
         // this.conection(option)
         this.ws = null
+        this.wsUrl = option.wsUrl || ''
         this.requestId = 1
         // 存储send方法传过来的回调函数容器，以reqid为key，回调函数为value的
         this.responseCallbacks = {}
         this.evnetCb = {
-            onopen: []
+            onopen: [],
+            onpush: [],
+            onerror: [],
+            onclose: [],
         }
     }
 
@@ -27,24 +31,31 @@ class MyWebsocket {
 
     pushHandler (data) {
         console.log('%c [push]', 'color: #409eff;font-weight: bold;', data)
+        this.emit('onpush', data)
     }
 
-    conection (wsUrl) {
+    conection () {
         if (this.ws) {
             this.ws.onerror = this.ws.onopen = ws.onclose = null;
             this.ws.close();
         }
 
-        this.ws = new WebSocket(wsUrl);
+        if (!this.wsUrl) {
+            throw new Error('没有设置链接websocket的链接')
+        }
+
+        this.ws = new WebSocket(this.wsUrl);
         // 简易监听事件
         this.ws.onerror = function() {
+            this.emit('onerror')
             console.log('%c [WebSocket 连接失败', 'color: #f56c6c;font-weight: bold;');
         };
         this.ws.onopen = () => {
             this.emit('onopen')
-            console.log('%c [WebSocket 连接成功]', 'color: #67c23a;font-weight: bold;', wsUrl);
+            console.log('%c [WebSocket 连接成功]', 'color: #67c23a;font-weight: bold;', this.wsUrl);
         };
         this.ws.onclose = function() {
+            this.emit('onclose')
             console.log('%c [WebSocket 连接关闭]', 'color: #f56c6c;font-weight: bold;');
             this.ws = null;
         };
