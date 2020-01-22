@@ -5,10 +5,14 @@ const $btnConnection = document.querySelector('#btn-connection')
 const $btnSend = document.querySelector('#btn-send')
 const $btnAll = document.querySelector('#btn-all')
 const $btnResponse = document.querySelector('#btn-response')
+const $btnStash = document.querySelector('#btn-stash')
+const $btnClose = document.querySelector('#btn-close')
 let myWs
 
 $btnConnection.addEventListener('click', function () {
-    myWs = new MyWebsocket()
+    myWs = new MyWebsocket({
+        wsUrl: `ws://${location.host}/chat`
+    })
     myWs.on('onopen', function () {
         console.log('---外：websocket链接成功---')
     })
@@ -21,11 +25,11 @@ $btnConnection.addEventListener('click', function () {
     myWs.on('onclose', function () {
         console.log('---外：WebSocket 连接关闭---')
     })
-    myWs.conection(`ws://${location.host}/chat`)
+    myWs.conection()
 })
 
 $btnSend.addEventListener('click', function () {
-    if (myWs.getReadyState() === WebSocket.OPEN) {
+    // if (myWs.getReadyState() === WebSocket.OPEN) {
         myWs.send('/user/getUserInfo', {userId: 123456}).then(res => {
             console.log('[---获取用户信息---]', res)
         }, err => {
@@ -33,11 +37,11 @@ $btnSend.addEventListener('click', function () {
         }).catch(e => {
             console.error('--catch--', e)
         })
-    }
+    // }
 })
 
 $btnAll.addEventListener('click', function () {
-    if (myWs.getReadyState() === WebSocket.OPEN) {
+    // if (myWs.getReadyState() === WebSocket.OPEN) {
         myWs.send('/user/getUserInfo', {userId: 123456}).then(data => {
             console.log('---1---', data)
         })
@@ -53,11 +57,19 @@ $btnAll.addEventListener('click', function () {
         myWs.send('/my/getConsult', {consultId: 123456}).then(data => {
             console.log('---5---', data)
         })
-    }
+    // }
 })
 
 $btnResponse.addEventListener('click', function () {
-    if (myWs.getReadyState() === WebSocket.OPEN) {
+    // if (myWs.getReadyState() === WebSocket.OPEN) {
         console.log(myWs.getResponseCallbacks())
-    }
+    // }
+})
+
+$btnStash.addEventListener('click', function () {
+    console.log('--stash--', myWs.getStashCallbacks())
+})
+
+$btnClose.addEventListener('click', function () {
+    console.log('--stash--', myWs.close())
 })
