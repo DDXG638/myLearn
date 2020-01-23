@@ -10,6 +10,7 @@ const $btnClose = document.querySelector('#btn-close')
 let myWs
 
 $btnConnection.addEventListener('click', function () {
+    // ws://dev.xinhulu.com:9800
     myWs = new MyWebsocket({
         wsUrl: `ws://${location.host}/chat`
     })
