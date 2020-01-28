@@ -10,6 +10,11 @@ class MyWebsocket {
         this.responseCallbacks = {}
         // ws没有准备好的话，需要将请求存储 于 暂存区 中
         this.stashCallbacks = []
+        this.heartbeatCheckIntervalTimer = null
+        this.heartbeatIdleTimer = null
+        this.heartbeatCheckIntervalTimes = 5000
+        this.heartbeatIdleTimes = 10000
+
         this.evnetCb = {
             onopen: [],
             onpush: [],
@@ -48,17 +53,18 @@ class MyWebsocket {
 
         this.ws = new WebSocket(this.wsUrl);
         // 简易监听事件
-        this.ws.onerror = () => {
+        this.ws.onerror = (event) => {
             this.emit('onerror')
-            console.log('%c [WebSocket 连接失败', 'color: #f56c6c;font-weight: bold;');
+            console.log('%c [WebSocket 连接失败', 'color: #f56c6c;font-weight: bold;', event);
         };
         this.ws.onopen = () => {
             console.log('%c [WebSocket 连接成功]', 'color: #67c23a;font-weight: bold;', this.wsUrl);
             this.emit('onopen')
             this._stashCallbacksHandler()
+            this._checkHeardBeat()
         };
-        this.ws.onclose = () => {
-            console.log('%c [WebSocket 连接关闭]', 'color: #f56c6c;font-weight: bold;');
+        this.ws.onclose = (event) => {
+            console.log('%c [WebSocket 连接关闭]', 'color: #f56c6c;font-weight: bold;', event);
             this.emit('onclose')
             // this.ws = null;
             // TODO: ws连接关闭后需要重新链接吗？
@@ -78,11 +84,18 @@ class MyWebsocket {
             } else if (data.msgtype === 'push') {
                 // 服务端主动推送
                 this._pushHandler(data)
+            } else if (data.msgtype === 'pong') { // TODO: 测试
+                console.log(`%c [pong]`, 'color: #409eff;font-weight: bold;')
             }
+
+            this._checkHeardBeat()
         };
     }
 
     close () {
+        clearTimeout(this.heartbeatCheckIntervalTimer)
+        clearTimeout(this.heartbeatIdleTimer)
+        
         if (this.ws) {
             this.ws.close();
         }
@@ -154,6 +167,21 @@ class MyWebsocket {
             })
             this.stashCallbacks.splice(0, this.stashCallbacks.length)
         }
+    }
+
+    // 心跳检测
+    _checkHeardBeat () {
+        clearTimeout(this.heartbeatCheckIntervalTimer)
+        clearTimeout(this.heartbeatIdleTimer)
+
+        this.heartbeatCheckIntervalTimer = setTimeout(() => {
+            this.send('ping', null)
+            // console.log(`%c [ping]`, 'color: #409eff;font-weight: bold;')
+            this.heartbeatIdleTimer = setTimeout(() => {
+                // 认为ws没有正常连接，需要重新连接
+                this._reconection()
+            }, this.heartbeatIdleTimes)
+        }, this.heartbeatCheckIntervalTimes)
     }
 
     // 注册监听事件

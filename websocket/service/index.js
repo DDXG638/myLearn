@@ -16,6 +16,7 @@ wss.on('connection', function (ws) {
     console.log('started client interval');
 
     setInterval(() => {
+        console.log('[push]')
         ws.send(returnData('push', 0, 'push-push-push-push'))
     }, 10000)
 
@@ -111,6 +112,10 @@ wss.on('connection', function (ws) {
                         "wx_state": 2
                     }
                 ]))
+                break
+            case 'ping': // 收到客户端发来的ping请求就，回复pong相应
+                ws.send(returnData('pong', 0, 'pong-pong'))
+                // ws.close()
                 break
             default: 
                 console.log('default')
