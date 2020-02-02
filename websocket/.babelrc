@@ -1,8 +1,10 @@
 {
     "presets": [
-        "@babel/preset-env"
+        "@babel/preset-env",
+        "@babel/preset-typescript", // ts的babel预设
     ],
     "plugins": [
+        "babel-plugin-transform-class-properties", // ts-处理class的插件
         [
             "@babel/plugin-transform-runtime", 
             {
