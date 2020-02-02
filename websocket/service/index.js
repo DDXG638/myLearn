@@ -114,7 +114,7 @@ wss.on('connection', function (ws) {
                 ]))
                 break
             case 'ping': // 收到客户端发来的ping请求就，回复pong相应
-                ws.send(returnData('pong', 0, 'pong-pong'))
+                ws.send(returnData('pong', data.reqid, 'pong-pong'))
                 // ws.close()
                 break
             default: 

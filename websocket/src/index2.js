@@ -86,6 +86,7 @@ class MyWebsocket {
                 this._pushHandler(data)
             } else if (data.msgtype === 'pong') { // TODO: 测试
                 console.log(`%c [pong]`, 'color: #409eff;font-weight: bold;')
+                delete this.responseCallbacks[data.reqid]
             }
 
             this._checkHeardBeat()
