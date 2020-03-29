@@ -3,8 +3,8 @@ const { CheckerPlugin } = require('awesome-typescript-loader')
 
 module.exports = {
     mode: 'development',
-    // entry: './src/pageIndex2.js',
-    entry: './src/pageIndexTs.ts',
+    entry: './src/pageIndex2.js',
+    // entry: './src/pageIndexTs.ts',
     output: {
         filename: 'pageIndex.js',
         path: path.resolve(__dirname, 'public/dist/js')
