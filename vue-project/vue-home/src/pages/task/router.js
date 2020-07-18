@@ -5,19 +5,25 @@ import Task from './views/Task'
 Vue.use(Router)
 
 export default new Router({
-    routes: [
-        {
-            path: '/',
-            name: 'task',
-            component: Task
-        },
-        {
-            path: '/sign',
-            name: 'sign',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ './views/Sign.vue')
-        }
-    ]
+  base: '/task',
+  routes: [
+    {
+      path: '/',
+      name: 'task',
+      component: Task
+    },
+    {
+      path: '/sign',
+      name: 'sign',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "sign" */ './views/Sign.vue')
+    },
+    {
+      path: '/attr',
+      name: 'attr',
+      component: () => import(/* webpackChunkName: "attr" */ './views/attrs.vue')
+    }
+  ]
 })

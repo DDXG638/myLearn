@@ -21,14 +21,14 @@
 </template>
 
 <script>
-    export default {
-        name: "sign",
-        methods: {
-            showToast(text) {
-                alert(text);
-            }
-        }
+export default {
+  name: 'sign',
+  methods: {
+    showToast (text) {
+      alert(text)
     }
+  }
+}
 </script>
 
 <style lang="stylus">

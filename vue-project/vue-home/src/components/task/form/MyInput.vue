@@ -12,50 +12,50 @@
 </template>
 
 <script>
-    import emitter from '@/mixins/emitter';
+import emitter from '@/mixins/emitter'
 
-    export default {
-        name: "my-input",
-        componentName: "my-input",
-        props: {
-            value: {
-                type: String,
-                default: ''
-            },
-            type: {
-                type: String,
-                default: 'text'
-            },
-            placeholder: {
-                type: String,
-                default: ''
-            }
-        },
-        mixins: [emitter],
-        data() {
-            return {
-                inputValue: this.value, // html中不直接绑定props中的value是为了不违反单向数据流原则
-            }
-        },
-        methods: {
-            inputHandle(event) {
-                // 获取最新的数据
-                this.inputValue = event.target.value;
-                // 通知组件数据已经改变
-                this.$emit('input', this.inputValue);
-
-                // this.$parent写太死了，如果又嵌套了一层，那所有逻辑都会出错
-                // 父组件（formItem）派发 数据改变 的事件，及时进行校验
-                // this.$parent.$emit('validate');
-
-                // 改进：封装了dispatch，一层一层地向上找对应的组件
-                this.dispatch('my-form-item', 'validate');
-            },
-            blurHandle(event) {
-                console.log('blurHandle', event.target.value);
-            }
-        }
+export default {
+  name: 'my-input',
+  componentName: 'my-input',
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: 'text'
+    },
+    placeholder: {
+      type: String,
+      default: ''
     }
+  },
+  mixins: [emitter],
+  data () {
+    return {
+      inputValue: this.value // html中不直接绑定props中的value是为了不违反单向数据流原则
+    }
+  },
+  methods: {
+    inputHandle (event) {
+      // 获取最新的数据
+      this.inputValue = event.target.value
+      // 通知组件数据已经改变
+      this.$emit('input', this.inputValue)
+
+      // this.$parent写太死了，如果又嵌套了一层，那所有逻辑都会出错
+      // 父组件（formItem）派发 数据改变 的事件，及时进行校验
+      // this.$parent.$emit('validate');
+
+      // 改进：封装了dispatch，一层一层地向上找对应的组件
+      this.dispatch('my-form-item', 'validate')
+    },
+    blurHandle (event) {
+      console.log('blurHandle', event.target.value)
+    }
+  }
+}
 </script>
 
 <style scoped>
