@@ -1,0 +1,18 @@
+// CSS Modules
+.common-box {
+  background-color: #fff;
+  border-radius: 6px;
+
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+
+    > span {
+      color: red;
+    }
+  }
+  .subtitle {
+    margin-top: 6px;
+    font-size: 28px;
+  }
+}
