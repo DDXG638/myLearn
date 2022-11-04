@@ -32,7 +32,7 @@ const count = ref(0)
     in your IDE for a better DX
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
-  <!-- CSS Modules 的用法 -->
+  <!-- CSS Modules 的用法 CSS Modules 的使用场景： -->
   <div :class="[commonStyleModule['common-box']]">
     <p :class="commonStyleModule['title']">我是标题 <span>123</span></p>
     <p :class="commonStyleModule['subtitle']">我是副标题</p>
@@ -42,5 +42,7 @@ const count = ref(0)
 <style lang="scss" scoped>
 .read-the-docs {
   color: $theme-color;
+  text-decoration: line-through;
+  text-shadow: #FC0 1px 0 10px;
 }
 </style>

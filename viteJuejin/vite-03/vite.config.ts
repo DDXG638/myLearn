@@ -1,5 +1,6 @@
 import { defineConfig, normalizePath } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import autoprefixer from 'autoprefixer'
 // 如果类型报错，需要安装 @types/node: pnpm i @types/node -D
 import path from 'path'
 
@@ -11,6 +12,15 @@ const variablePath = normalizePath(path.resolve('./src/style/common.scss'))
 export default defineConfig({
   plugins: [vue()],
   css: {
+    // postcss 与 postcss.config.js 文件二选一
+    // postcss: {
+    //   plugins: [
+    //     autoprefixer({
+    //       // 指定目标浏览器
+    //       overrideBrowserslist: ['Chrome > 30', 'ff > 31', 'ie 11']
+    //     })
+    //   ]
+    // },
     preprocessorOptions: {
       scss: {
         // 具体配置查看：TODO：但是我没有看到对应的配置
@@ -21,6 +31,9 @@ export default defineConfig({
     },
     modules: {
       // see: https://cn.vitejs.dev/config/shared-options.html#css-modules
+      // 一般我们可以通过 generateScopedName 属性来对生成的类名进行自定义
+      // 其中，name 表示当前文件名，local 表示类名
+      generateScopedName: '[name]__[local]___[hash:base64:5]'
     }
   }
 })
