@@ -1,0 +1,42 @@
+.poster-wrapper {
+  height: 100%;
+  overflow: auto;
+  background-image: url(https://static.coolpad.com/main-package/inbite-bg.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+  .container {
+    padding-top: 190rpx;
+  }
+
+  .poster-image-box {
+    margin: 0 auto;
+    width: 640rpx;
+    height: 1253rpx;
+    box-shadow: 0 9rpx 10rpx 0 rgba(204,88,48,.3);
+    border-radius: 32rpx;
+    overflow: hidden;
+    font-size: 0;
+
+    .poster-img {
+      width: 100%;
+    }
+  }
+
+  .poster-footer {
+    margin-top: 20rpx;
+    padding: 22rpx 80rpx 0;
+    height: 184rpx;
+    background: rgba(255, 255, 255, .3);
+
+    .save-btn {
+      height: 90rpx;
+      line-height: 90rpx;
+      background: linear-gradient(224deg, #FF4021 0%, #FF6030 100%);
+      border-radius: 45rpx;
+      text-align: center;
+      font-size: 32rpx;
+      color: #fff;
+    }
+  }
+}

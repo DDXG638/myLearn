@@ -1,0 +1,27 @@
+<page-container
+  show="{{ show }}"
+  position="right"
+  z-index="{{ 1000 }}"
+  bind:beforeleave="beforeleave"
+>
+  <view class="poster-wrapper">
+    <view class="container">
+      <cool-nav placeholder title="分享海报" custom-class="cool-nav-white" bind:click-left="onClickLeft" />
+      <view class="poster-image-box">
+        <image src="{{ image }}" mode="widthFix" class="poster-img" />
+      </view>
+      <view class="poster-footer">
+        <view class="save-btn" bind:tap="saveImage">
+          保存到本地
+        </view>
+      </view>
+    </view>
+    <painter 
+      customActionStyle="{{ customActionStyle }}"
+      palette="{{ palette }}"
+      widthPixels="{{ 1500 }}"
+      bind:imgOK="onImgOK"
+      bind:imgErr="onImgErr"
+    />
+  </view>
+</page-container>
