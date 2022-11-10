@@ -10,4 +10,19 @@
  * 提示：气温 列表长度的范围是 [1, 30000]。每个气温的值的均为华氏度，都是在 [30, 100] 范围内的整数。
  */
 
+function diffTemperatures(nums) {
+  const res = (new Array(nums.length)).fill(0)
+  const stack = []
 
+  for(let i = 0; i < nums.length; i++) {
+    while(stack.length && nums[stack[stack.length - 1]] < nums[i]) {
+      const index = stack.pop()
+      res[index] = i - index
+    }
+    stack.push(i)
+  }
+  
+  return res
+}
+
+console.log('气温差：', diffTemperatures([79, 74, 36, 71, 69, 72, 76, 73]))
