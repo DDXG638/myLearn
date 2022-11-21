@@ -1,4 +1,5 @@
 /**
+ * see: https://juejin.cn/book/6844733800300150797/section/6844733800358871048
  * 全排列问题
  * 
  * 题目描述：给定一个没有重复数字的序列，返回其所有可能的全排列。
@@ -17,14 +18,15 @@ function permute(nums) {
   function dfs(index) {
     if (index >= len) {
       res.push([...cur])
+      return
     }
 
     for (let i = 0; i < len; i++) {
       if (!repeatMap[i]) {
         repeatMap[i] = true
         cur.push(nums[i])
-        dfs(i + 1)
-        cur.shift()
+        dfs(index + 1)
+        cur.pop()
         repeatMap[i] = false
       }
     }
@@ -35,4 +37,4 @@ function permute(nums) {
   return res
 }
 
-console.log('全排列问题：', JSON.stringify(permute([1,2,3])))
+console.log('全排列问题：', JSON.stringify(permute([1,2,3,4])))
