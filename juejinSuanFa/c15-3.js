@@ -12,6 +12,7 @@ function combine(n, k) {
   const subRes = []
 
   function dfs(index) {
+    // 这里不需要判断subRes.length>k的情况，因为subRes.length是从0开始增加的，=k的时候已经return了，自然不会有>k的情况
     if (subRes.length === k) {
       res.push(subRes.slice())
       return
