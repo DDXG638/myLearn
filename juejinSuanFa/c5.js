@@ -28,7 +28,9 @@
       val: "F"
     },
     left: {
-      val: "G"
+      val: "G",
+      left: { val: "H" },
+      right: { val: "I" }
     }
   }
 }
@@ -85,4 +87,4 @@ function postorder(root) {
   return res
 }
 
-console.log('后序遍历：', postorder(root)) // ['D', 'E', 'B', 'G', 'F', 'C', 'A']
+console.log('后序遍历：', postorder(root)) // ['D', 'E', 'B', 'H', 'I', 'G', 'F', 'C', 'A']
