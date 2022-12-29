@@ -1,0 +1,23 @@
+{
+  "name": "QiChaCha",
+  "description": "A browser action with a popup dump of all bookmarks, including search, add, edit and delete.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "action": {
+    "default_title": "获取企查查数据",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.qcc.com/*"],
+      "js": ["main.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
